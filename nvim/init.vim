@@ -21,6 +21,10 @@ set incsearch ignorecase smartcase hlsearch
 " shortcuts
 ":inoremap kj <Esc>
 ":nnoremap kj <C-C>
+
+"copy selection:
+:vnoremap <C-q> "+y
+
 :nnoremap <C-f> :Files <Enter>
 :nnoremap <C-g> :Rg
 
