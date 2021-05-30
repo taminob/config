@@ -14,13 +14,13 @@
         "format": "{name}: {icon}",
         "format-icons": {
             "1": "",
-            "2": "",
-            "3": "✉",
+            "2": "",
+            "3": "",
             "4": "",
-            "5": "",
+            "5": "",
             "8": "",
             "9": "",
-            "nextcloud": "☁",
+            "nextcloud": "",
             "urgent": "",
             "focused": "",
             "default": ""
@@ -74,8 +74,10 @@
         "format-ethernet": "{ipaddr}/{cidr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "tooltip": false
+        //"format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip": true,
+		"tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+		"on-click": "sh $HOME/sync/config/waybar/connection_management.sh"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
@@ -155,6 +157,7 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
-        "format-icons": ["", ""]
+        //"format-icons": ["", ""]
+        "format-icons": ["🟀", "🟉", "🟎", "🟒"]
     }
 }

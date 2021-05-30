@@ -45,14 +45,14 @@ window#waybar.solo {
     min-width:  25px;
 }
 
-#cpu, #memory, #temperature {
+#cpu, #memory, #temperature, #battery, #backlight {
     margin:     0px 6px 0px 10px;
     min-width:  50px;
 }
 
 #clock {
     margin:     0px 16px 0px 10px;
-    min-width:  140px;
+    min-width:  6em;
 }
 
 #battery.warning {
