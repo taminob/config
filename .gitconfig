@@ -2,7 +2,7 @@
 	email = dev@tb6.eu
 	name = Tamino Bauknecht
 [core]
-	editor = vim
+	editor = nvim
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
