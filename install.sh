@@ -5,47 +5,92 @@ if [ -z "$HOSTNAME" ]; then
 	HOSTNAME="$(uname -n)"
 fi
 CONFIGLOCATION="$HOME/sync/config"
-DESTLOCATION="$HOME/.config"
+DESTCONFIGLOCATION="$HOME/.config"
+DESTHOMELOCATION="$HOME"
+
+create_config_path()
+{
+	config_path=$1
+	mkdir -p config_path
+}
+
+install_config()
+{
+	source_path="$1"
+	dest_path="$2"
+	create_dir=$3
+	if [ create_dir ]; then
+		create_config_path $(dirname $dest_path)
+	fi
+	ln -sivn "$source_path" "$dest_path"
+}
 
 checkifcontinue()
 {
-	read -p "$1" CONTINUE
-	if [ ! -z "$CONTINUE" -a "$CONTINUE" != "y" -a "$CONTINUE" != "Y" ]; then
+	read -p "$1 (y/N)" CONTINUE
+	if [ "$CONTINUE" == "y" -o "$CONTINUE" == "Y" ]; then
+		true
+	elif [ -z "$CONTINUE" -o "$CONTINUE" != "n" -o "$CONTINUE" != "N" ]; then
+		false
+	else
 		echo "Installation aborted!"
 		exit
 	fi
 }
 
-#checkifcontinue "Continue installation of packages?"
-#sudo pacman -S $(cat "$CONFIGLOCATION/packages") 
+if ! checkifcontinue "Continue installation for: $HOSTNAME?"; then
+	exit
+fi
 
-checkifcontinue "Continue installation of configuration: $HOSTNAME? (Y/n)"
-mkdir "$DESTLOCATION/sway"
-ln -sivn "$CONFIGLOCATION/sway/$HOSTNAME.conf" "$DESTLOCATION/sway/config"
+if checkifcontinue "Continue installation of configuration?"; then
+	install_config "$CONFIGLOCATION/sway/$HOSTNAME.conf" "$DESTCONFIGLOCATION/sway/config" true
 
-mkdir "$DESTLOCATION/mako"
-ln -sivn "$CONFIGLOCATION/mako/$HOSTNAME.conf" "$DESTLOCATION/mako/config"
+	install_config "$CONFIGLOCATION/mako/$HOSTNAME.conf" "$DESTCONFIGLOCATION/mako/config" true
 
-ln -sivn "$CONFIGLOCATION/waybar" "$DESTLOCATION/waybar"
+	install_config "$CONFIGLOCATION/waybar" "$DESTCONFIGLOCATION/waybar"
 
-ln -sivn "$CONFIGLOCATION/wofi" "$DESTLOCATION/wofi"
+	install_config "$CONFIGLOCATION/wofi" "$DESTCONFIGLOCATION/wofi"
 
-ln -sivn "$CONFIGLOCATION/alacritty" "$DESTLOCATION/alacritty"
+	install_config "$CONFIGLOCATION/alacritty" "$DESTCONFIGLOCATION/alacritty"
 
-ln -sivn "$CONFIGLOCATION/nvim" "$DESTLOCATION/nvim"
+	install_config "$CONFIGLOCATION/nvim" "$DESTCONFIGLOCATION/nvim"
 
-mkdir -p "$DESTLOCATION/Code - OSS/User/"
-ln -sivn "$CONFIGLOCATION/code/settings.json" "$DESTLOCATION/Code - OSS/User/settings.json"
+	install_config "$CONFIGLOCATION/ranger" "$DESTCONFIGLOCATION/ranger"
 
-ln -sivn "$CONFIGLOCATION/.bash_profile" "$HOME/.bash_profile"
-ln -sivn "$CONFIGLOCATION/.bashrc" "$HOME/.bashrc"
+	install_config "$CONFIGLOCATION/code/settings.json" "$DESTCONFIGLOCATION/Code - OSS/User/settings.json" true
+fi
 
-ln -sivn "$CONFIGLOCATION/.zshrc" "$HOME/.zshrc"
-ln -sivn "$CONFIGLOCATION/.zshenv" "$HOME/.zshenv"
-ln -sivn "$CONFIGLOCATION/.zprofile" "$HOME/.zprofile"
+if checkifcontinue "Continue installation of home configuration: $HOSTNAME?"; then
+	install_config "$CONFIGLOCATION/.bash_profile" "$HOME/.bash_profile"
+	install_config "$CONFIGLOCATION/.bashrc" "$HOME/.bashrc"
 
-ln -sivn "$CONFIGLOCATION/.gitconfig" "$HOME/.gitconfig"
-ln -sivn "$CONFIGLOCATION/.tmux.conf" "$HOME/.tmux.conf"
-ln -sivn "$CONFIGLOCATION/.nanorc" "$HOME/.nanorc"
+	install_config "$CONFIGLOCATION/.zshrc" "$HOME/.zshrc"
+	install_config "$CONFIGLOCATION/.zshenv" "$HOME/.zshenv"
+	install_config "$CONFIGLOCATION/.zprofile" "$HOME/.zprofile"
 
-echo "Configuration installed!"
+	install_config "$CONFIGLOCATION/.gitconfig" "$HOME/.gitconfig"
+	install_config "$CONFIGLOCATION/.tmux.conf" "$HOME/.tmux.conf"
+	install_config "$CONFIGLOCATION/.nanorc" "$HOME/.nanorc"
+fi
+
+AUR_HELPER="yay"
+AUR_BUILD_PATH="/tmp/$AUR_HELPER"
+if checkifcontinue "Install AUR helper ($AUR_HELPER)?"; then
+	mkdir -p "$AUR_BUILD_PATH" && cd "$AUR_BUILD_PATH" && git clone "https://aur.archlinux.org/$AUR_HELPER.git" "$AUR_BUILD_PATH" && makepkg -si
+fi
+
+PACKAGE_LIST_LOCATION="$CONFIGLOCATION/packages"
+if checkifcontinue "Inspect package diff?"; then
+	python "$PACKAGE_LIST_LOCATION/packages_diff.py"
+fi
+
+if checkifcontinue "Install packages?"; then
+	sudo pacman -S --needed $("$PACKAGE_LIST_LOCATION/packages.sh")
+fi
+
+if checkifcontinue "Continue installation of aur packages?"; then
+	$AUR_HELPER -S --needed $(cat "$PACKAGE_LIST_LOCATION/aur_packages_")
+fi
+
+echo "Configuration installed! Manual tweaks might be required depending on the system. See $CONFIGLOCATION/configuration for scripts/guides."
+
