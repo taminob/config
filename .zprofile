@@ -12,10 +12,14 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
     export QT_QPA_PLATFORMTHEME=qt5ct
     export GTK_THEME=Breeze-Dark
     export GTK2_RC_FILES=$HOME/.gtkrc-2.0
+#	export GTK_USE_PORTAL=1 # use qt file dialog for gtk applications
 
-#	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+#	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock # manually set SWAYSOCK
 
     export $(gnome-keyring-daemon --start --components=ssh,secrets)
 
-    exec sway
+	echo "$(date): start sway" >> $HOME/.swaylog
+	exec >> $HOME/.swaylog 2>&1
+	exec sway
+	#exec sway | tee -a $HOME/.swaylog
 fi
