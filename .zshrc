@@ -1,13 +1,6 @@
 # .zshrc
 
-HISTFILE=~/.zhistory
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd # use "cd" in front of stand-alone path
 bindkey -v # use vim keybindings
-# always start in command mode (vicmd) instead of insert mode (viins)
-#zle-line-init() { zle -K vicmd; }
-#zle -N zle-line-init
 
 zstyle :compinstall filename '/home/me/.zshrc'
 
@@ -27,15 +20,26 @@ zstyle ':completion:*' special-dirs true
 
 #PROMPT='%F{green}%n%f@%F{magenta}%m%f %F{red}%B%~%b%f %# '
 #RPROMPT='[%F{yellow}%?%f]'
-setopt prompt_subst # all functions in PROMPT
+setopt prompt_subst # allow functions in PROMPT
 setopt interactivecomments # allow comments outside of scripts
+setopt autocd # use "cd" in front of stand-alone path
+
+HISTFILE=~/.zhistory
+HISTSIZE=1000
+SAVEHIST=1000
+setopt hist_ignore_space # ignore commands in history starting with at least one space
+
+# always start in command mode (vicmd) instead of insert mode (viins)
+#zle-line-init() { zle -K vicmd; }
+#zle -N zle-line-init
 
 #alias ls='ls --color=auto'
 alias ls='exa -h'
+alias l='ls'
 alias vim='nvim'
 
 # custom shortcuts
-bindkey '^[c' vi-cmd-mode
+bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
