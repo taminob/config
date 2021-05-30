@@ -1,0 +1,10 @@
+# add gnome-keyring to pam for unlocking at login:
+#/etc/pam.d/login
+#...below last auth entry:
+-auth       optional     pam_gnome_keyring.so
+#...below last session-entry:
+-session    optional     pam_gnome_keyring.so auto_start
+
+#kwallet:
+#-session    optional     pam_kwallet5.so auto_start force_run
+#-auth       optional     pam_kwallet5.so
