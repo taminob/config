@@ -1,0 +1,23 @@
+kde-cli-tools
+bluez-hid2hci
+python-language-server
+syslog-ng logrotate
+wireguard-tools
+hyphen-en hyphen-de
+texlive-core texlive-fontsextra texlive-formatsextra texlive-latexextra
+android-tools
+wireshark-qt wireshark-cli
+traceroute
+syncthing
+samba
+veracrypt
+xterm
+x11-ssh-askpass
+kitty
+qreator
+mplayer
+sdl
+aribb24
+celt
+reiserfsprogs
+unixodbc

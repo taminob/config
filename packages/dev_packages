@@ -1,0 +1,28 @@
+autoconf
+automake
+bison
+boost
+clang llvm lld lldb
+cmake
+docker
+make
+gcc gdb
+git-lfs
+go
+gperf
+gperftools
+jdk-openjdk
+nasm
+npm
+rustup rust-bindgen
+python2
+python
+python-pip python-pycryptodome python-lockfile
+python-virtualenv
+qemu edk2-ovmf
+sqlite
+postgresql
+bc
+patch
+perf
+flex
