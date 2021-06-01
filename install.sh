@@ -6,7 +6,7 @@ if [ -z "$HOSTNAME" ]; then
 fi
 CONFIGLOCATION="$HOME/sync/config"
 DESTCONFIGLOCATION="$HOME/.config"
-DESTHOMELOCATION="$HOME"
+DESTHOMELOCATION="$DESTHOMELOCATION"
 
 create_config_path()
 {
@@ -42,7 +42,7 @@ if ! checkifcontinue "Continue installation for: $HOSTNAME?"; then
 	exit
 fi
 
-if checkifcontinue "Continue installation of configuration?"; then
+if checkifcontinue "Apply configuration to $CONFIGLOCATION?"; then
 	install_config "$CONFIGLOCATION/sway/$HOSTNAME.conf" "$DESTCONFIGLOCATION/sway/config" true
 
 	install_config "$CONFIGLOCATION/mako/$HOSTNAME.conf" "$DESTCONFIGLOCATION/mako/config" true
@@ -60,17 +60,17 @@ if checkifcontinue "Continue installation of configuration?"; then
 	install_config "$CONFIGLOCATION/code/settings.json" "$DESTCONFIGLOCATION/Code - OSS/User/settings.json" true
 fi
 
-if checkifcontinue "Continue installation of home configuration: $HOSTNAME?"; then
-	install_config "$CONFIGLOCATION/.bash_profile" "$HOME/.bash_profile"
-	install_config "$CONFIGLOCATION/.bashrc" "$HOME/.bashrc"
+if checkifcontinue "Apply configuration to $DESTHOMELOCATION?"; then
+	install_config "$CONFIGLOCATION/.bash_profile" "$DESTHOMELOCATION/.bash_profile"
+	install_config "$CONFIGLOCATION/.bashrc" "$DESTHOMELOCATION/.bashrc"
 
-	install_config "$CONFIGLOCATION/.zshrc" "$HOME/.zshrc"
-	install_config "$CONFIGLOCATION/.zshenv" "$HOME/.zshenv"
-	install_config "$CONFIGLOCATION/.zprofile" "$HOME/.zprofile"
+	install_config "$CONFIGLOCATION/.zshrc" "$DESTHOMELOCATION/.zshrc"
+	install_config "$CONFIGLOCATION/.zshenv" "$DESTHOMELOCATION/.zshenv"
+	install_config "$CONFIGLOCATION/.zprofile" "$DESTHOMELOCATION/.zprofile"
 
-	install_config "$CONFIGLOCATION/.gitconfig" "$HOME/.gitconfig"
-	install_config "$CONFIGLOCATION/.tmux.conf" "$HOME/.tmux.conf"
-	install_config "$CONFIGLOCATION/.nanorc" "$HOME/.nanorc"
+	install_config "$CONFIGLOCATION/.gitconfig" "$DESTHOMELOCATION/.gitconfig"
+	install_config "$CONFIGLOCATION/.tmux.conf" "$DESTHOMELOCATION/.tmux.conf"
+	install_config "$CONFIGLOCATION/.nanorc" "$DESTHOMELOCATION/.nanorc"
 fi
 
 AUR_HELPER="yay"
@@ -88,7 +88,7 @@ if checkifcontinue "Install packages?"; then
 	sudo pacman -S --needed $("$PACKAGE_LIST_LOCATION/packages.sh")
 fi
 
-if checkifcontinue "Continue installation of aur packages?"; then
+if checkifcontinue "Install aur packages?"; then
 	$AUR_HELPER -S --needed $(cat "$PACKAGE_LIST_LOCATION/aur_packages_")
 fi
 

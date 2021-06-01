@@ -38,11 +38,11 @@ for file_name, packages in all_packages.items():
 	else:
 		print("all " + file_name + " installed!")
 
-input("Press <Enter> to list manually installed packages!")
-installed_packages = get_pacman("-Qtt")
-all_packages = [item for p in all_packages.values() for item in p]
-manual_installed = []
-for x in installed_packages:
-	if x not in all_packages:
-		manual_installed.append(x)
-print(manual_installed)
+if input("List all installed packages which are not in any list! (y/N)").upper() == "Y":
+	installed_packages = get_pacman("-Qtt")
+	all_packages = [item for p in all_packages.values() for item in p]
+	manual_installed = []
+	for x in installed_packages:
+		if x not in all_packages:
+			manual_installed.append(x)
+	print(manual_installed)
