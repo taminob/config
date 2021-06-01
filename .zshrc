@@ -37,6 +37,7 @@ setopt hist_ignore_space # ignore commands in history starting with at least one
 alias ls='exa -h'
 alias l='ls'
 alias vim='nvim'
+alias sudo='sudo ' # enable alias checking after sudo
 
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
