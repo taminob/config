@@ -1,0 +1,4 @@
+# edit /usr/lib/code/product.json
+"extensionAllowedProposedApi": [
+    "ms-vsliveshare.vsliveshare"
+]
