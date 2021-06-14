@@ -57,6 +57,7 @@ window#waybar.solo {
 
 #battery.warning {
    color:       rgba(255, 210, 4, 1);
+   background:  rgba(35, 31, 32, 0.50);
 }
 
 #battery.critical {
