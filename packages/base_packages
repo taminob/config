@@ -14,6 +14,7 @@ netctl
 dhcpcd
 wpa_supplicant
 iw
+inetutils
 bluez
 libgnome-keyring
 android-udev

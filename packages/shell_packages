@@ -4,7 +4,7 @@ bluez-tools
 cpio
 exa
 expac
-ffmpeg ladspa
+ffmpeg
 fzf
 gnu-netcat
 htop
@@ -12,6 +12,7 @@ iw
 lynx
 man-db
 man-pages
+tldr
 mlocate
 nano
 neofetch

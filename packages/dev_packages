@@ -14,7 +14,7 @@ gperftools
 jdk-openjdk
 nasm
 npm
-rustup rust-bindgen
+rustup
 python2
 python
 python-pip python-pycryptodome python-lockfile

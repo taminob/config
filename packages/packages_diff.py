@@ -38,7 +38,7 @@ for file_name, packages in all_packages.items():
 	else:
 		print("all " + file_name + " installed!")
 
-if input("List all installed packages which are not in any list! (y/N)").upper() == "Y":
+if input("List all installed packages which are not in any list? (y/N)").upper() == "Y":
 	installed_packages = get_pacman("-Qtt")
 	all_packages = [item for p in all_packages.values() for item in p]
 	manual_installed = []
