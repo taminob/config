@@ -15,7 +15,8 @@ set mouse=a
 
 " enable tabs
 set autoindent noexpandtab tabstop=4 shiftwidth=4 softtabstop=-1
-filetype plugin indent off
+filetype plugin on
+filetype indent on
 " configure search (smartcase: case-sensitive when any uppercase char)
 set incsearch ignorecase smartcase hlsearch
 
@@ -36,6 +37,10 @@ noremap <Right> <Nop>
 nnoremap <Esc> :noh<Enter><Esc>
 nnoremap <Esc>^[ <Esc>^[
 
+" search for visual selection and exit visual mode
+vnoremap / *<CR><Esc>
+"vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " move between buffers
 nnoremap <C-j> :bprev<CR>
 nnoremap <C-k> :bnext<CR>
@@ -44,7 +49,11 @@ nnoremap <C-k> :bnext<CR>
 :nnoremap <C-e> :Files<CR>
 :nnoremap <C-g> :Rg<CR>
 
-" replace
+" replace in whole file
 :nnoremap <C-h> :%s///g
+:vnoremap <C-h> :'<,'>s///g
+
+" write as root (terminal required error)
+"command Sudow :w !sudo tee \%
 
 "free: C-p, C-n, C-k, C-j, C-h, C-s, C-q, C-@, C-_
