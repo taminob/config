@@ -6,12 +6,12 @@ if [ -z "$HOSTNAME" ]; then
 fi
 CONFIGLOCATION="$HOME/sync/config"
 DESTCONFIGLOCATION="$HOME/.config"
-DESTHOMELOCATION="$DESTHOMELOCATION"
+DESTHOMELOCATION="$HOME"
 
 create_config_path()
 {
 	config_path=$1
-	mkdir -p config_path
+	mkdir -p $config_path
 }
 
 install_config()
@@ -90,6 +90,15 @@ fi
 
 if checkifcontinue "Install aur packages?"; then
 	$AUR_HELPER -S --needed $(cat "$PACKAGE_LIST_LOCATION/aur_packages_")
+fi
+
+if checkifcontinue "Change default shell to zsh?"; then
+	chsh -s /usr/bin/zsh
+fi
+
+if checkifcontinue "Create ~/arch and ~/tests symlinks?"; then
+	ln -sivn "$HOME/software/tests" "$HOME/tests"
+	ln -sivn "$HOME/sync/arch" "$HOME/arch"
 fi
 
 echo "Configuration installed! Manual tweaks might be required depending on the system. See $CONFIGLOCATION/configuration for scripts/guides."
