@@ -36,6 +36,8 @@ setopt hist_ignore_space # ignore commands in history starting with at least one
 #alias ls='ls --color=auto'
 alias ls='exa -h'
 alias l='ls'
+alias la='ls -a'
+alias ll='ls -l'
 alias vim='nvim'
 alias sudo='sudo ' # enable alias checking after sudo
 
