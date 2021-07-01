@@ -17,6 +17,11 @@ set mouse=a
 set autoindent noexpandtab tabstop=4 shiftwidth=4 softtabstop=-1
 filetype plugin on
 filetype indent on
+
+" show tabs and eol
+set list
+set listchars=tab:▸\ ,trail:·,eol:¬
+
 " configure search (smartcase: case-sensitive when any uppercase char)
 set incsearch ignorecase smartcase hlsearch
 

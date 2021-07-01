@@ -12,3 +12,5 @@
 	defaultBranch = main
 [oh-my-zsh]
 	hide-dirty = 1
+[pull]
+	ff = only

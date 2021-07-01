@@ -5,6 +5,7 @@ linux-headers
 sudo
 git
 arch-install-scripts
+fakeroot
 jfsutils
 btrfs-progs
 ntfs-3g
