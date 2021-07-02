@@ -3,6 +3,7 @@ adobe-source-han-sans-jp-fonts
 adobe-source-han-sans-kr-fonts
 adobe-source-han-sans-tw-fonts
 awesome-terminal-fonts
+libertinus-font
 noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
@@ -13,7 +14,6 @@ ttf-anonymous-pro
 ttf-hannom
 ttf-indic-otf
 ttf-jetbrains-mono
-ttf-linux-libertine
 ttf-monofur
 ttf-proggy-clean
 ttf-roboto
