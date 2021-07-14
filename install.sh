@@ -96,6 +96,14 @@ if checkifcontinue "Change default shell to zsh?"; then
 	chsh -s /usr/bin/zsh
 fi
 
+if checkifcontinue "Create ~/sync, ~/software/tests, ~/downloads, ~/videos/screen_recordings, ~/pictures/screenshots directories?"; then
+	mkdir -pv "$HOME/sync"
+	mkdir -pv "$HOME/software/tests"
+	mkdir -pv "$HOME/downloads"
+	mkdir -pv "$HOME/videos/screen_recordings"
+	mkdir -pv "$HOME/pictures/screenshots"
+fi
+
 if checkifcontinue "Create ~/arch and ~/tests symlinks?"; then
 	ln -sivn "$HOME/software/tests" "$HOME/tests"
 	ln -sivn "$HOME/sync/arch" "$HOME/arch"
