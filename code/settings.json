@@ -2,5 +2,6 @@
     "editor.fontFamily": "",
     "terminal.integrated.fontFamily": "monospace, PowerLineSymbols",
     "liveshare.presence": true,
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "files.eol": "\n"
 }
