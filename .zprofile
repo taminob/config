@@ -2,9 +2,10 @@
 
 if [ "$(tty)" = "/dev/tty1" ] ; then
 	# environment variables
-	export QT_QPA_PLATFORM=wayland
+	export QT_QPA_PLATFORM=wayland # force X11: xcb
 	export GDK_BACKEND="wayland,x11"
-#	export SDL_VIDEODRIVER=wayland
+#	export SDL_VIDEODRIVER=wayland # force X11: x11
+#	export CLUTTER_BACKEND=wayland
 
 	export XDG_SESSION_TYPE=wayland
 	export XDG_CURRENT_DESKTOP=sway
