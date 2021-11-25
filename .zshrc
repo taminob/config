@@ -40,6 +40,7 @@ alias la='ls -a'
 alias ll='ls -l'
 alias vim='nvim'
 alias sudo='sudo ' # enable alias checking after sudo
+alias venv='source venv/bin/activate'
 
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode

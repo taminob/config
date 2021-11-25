@@ -27,10 +27,10 @@ set incsearch ignorecase smartcase hlsearch
 
 """ shortcuts
 " disable arrows
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+"noremap <Up> <Nop>
+"noremap <Down> <Nop>
+"noremap <Left> <Nop>
+"noremap <Right> <Nop>
 
 ":inoremap kj <Esc>
 ":nnoremap kj <C-C>
@@ -57,6 +57,9 @@ nnoremap <C-k> :bnext<CR>
 " replace in whole file
 :nnoremap <C-h> :%s///g
 :vnoremap <C-h> :'<,'>s///g
+
+" use 2 spaces instead of tabs
+:nnoremap <C-t> :set tabstop=2 shiftwidth=2 expandtab<CR>
 
 " write as root (terminal required error)
 "command Sudow :w !sudo tee \%

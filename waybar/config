@@ -40,6 +40,12 @@
 			"deactivated": ""
 		}
 	},
+//	TODO: wait for merge of makoctl pull request for toggle-mode and get-mode
+//	"custom/notification_inhibitor": {
+//		"format": "  {}  ",
+//		"on-click": "makoctl toggle-mode do-not-disturb"
+//		"exec": "makoctl get-mode",
+//	},
 	"tray": {
 		// "icon-size": 21,
 		"spacing": 10
