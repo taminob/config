@@ -40,7 +40,21 @@ alias la='ls -a'
 alias ll='ls -l'
 alias vim='nvim'
 alias sudo='sudo ' # enable alias checking after sudo
-alias venv='source venv/bin/activate'
+#alias venv='source venv/bin/activate' # use functions to allow parameters
+#alias open='xdg-open' # use functions to allow parameters
+
+venv() {
+	venv_path="$1"
+	if [ -z "$1" ]; then
+		venv_path="venv"
+	fi
+	source "$venv_path"/bin/activate
+}
+
+open() {
+	MAX_PARALLEL=8
+	echo "$@" | xargs -n 1 -P "$MAX_PARALLEL" xdg-open
+}
 
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode

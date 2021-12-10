@@ -1,4 +1,4 @@
 # qt-theme: set to breeze and icon-theme to breeze-dark
 qt5ct
-# apply BreezeDark color palette
+# apply BreezeDark color palette; see BreezeDark.colors copy in $CONFIG_HOME/configuration/files/BreezeDark.colors
 cp /usr/share/color-schemes/BreezeDark.colors $HOME/.config/kdeglobals

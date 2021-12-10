@@ -1,7 +1,8 @@
 {
-    "editor.fontFamily": "",
+    "editor.fontFamily": "monospace",
     "terminal.integrated.fontFamily": "monospace, PowerLineSymbols",
     "liveshare.presence": true,
     "window.zoomLevel": 1,
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim"
 }

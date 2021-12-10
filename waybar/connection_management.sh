@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 NETWORK_WINDOW_NAME="nm_tui_win"
 
 focus_network_window()

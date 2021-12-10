@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 HOSTNAME="$1"
 if [ -z "$HOSTNAME" ]; then
 	HOSTNAME="$(uname -n)"

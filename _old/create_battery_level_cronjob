@@ -1,0 +1,2 @@
+# create via "crontab -e` a cronjob to execute the script every 5min
+*/5 * * * * /home/me/sync/config/configuration/scripts/battery_warning.sh >/dev/null 2>&1

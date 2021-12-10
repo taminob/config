@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 echo "WARNING: this will break install for vim if not installed already!"
 echo "Delete the created symlink /usr/bin/vim to fix this."
 
