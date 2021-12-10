@@ -44,6 +44,14 @@ if ! checkifcontinue "Continue installation for: $HOSTNAME?"; then
 	exit
 fi
 
+if ! checkifcontinue 'If username is not "me", make sure to run (in config location): find . -type f -exec sed -i "s/\/home\/me/\/home\/$USERNAME/" {} +'; then
+	exit
+fi
+
+if ! checkifcontinue "If config location is not /sync/config, make sure to run (in config location): find . -type f -exec sed -i "s/\/sync\/config/\/path\/to\/config/" {} +"; then
+	exit
+fi
+
 if checkifcontinue "Apply configuration to $CONFIGLOCATION?"; then
 	install_config "$CONFIGLOCATION/sway/$HOSTNAME.conf" "$DESTCONFIGLOCATION/sway/config" true
 
