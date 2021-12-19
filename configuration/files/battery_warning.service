@@ -1,12 +1,6 @@
 [Unit]
-Description=Execute battery warning script every 5min
+Description=Execute battery warning script
 
-[Timer]
-OnBootSec=5min
-OnUnitActiveSec=5min
-Persistent=true
-ExecStart=/home/me/sync/config/configuration/scripts/battery_warning.sh
-
-[Install]
-WantedBy=timers.target
+[Service]
+ExecStart=/opt/bin/battery_warning.sh
 
