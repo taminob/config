@@ -15,3 +15,5 @@
 	hide-dirty = 1
 [pull]
 	ff = only
+[commit]
+	gpgsign = true
