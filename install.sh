@@ -82,7 +82,8 @@ if checkifcontinue "Apply configuration to $DESTHOMELOCATION?"; then
 	install_config "$CONFIGLOCATION/.tmux.conf" "$DESTHOMELOCATION/.tmux.conf"
 	install_config "$CONFIGLOCATION/.nanorc" "$DESTHOMELOCATION/.nanorc"
 
-	install_config "$CONFIGLOCATION/gpg-agent.conf" "$DESTHOMELOCATION/.gnupg/gpg-agent.conf" true
+	install_config "$CONFIGLOCATION/gnupg/gpg-agent.conf" "$DESTHOMELOCATION/.gnupg/gpg-agent.conf" true
+	install_config "$CONFIGLOCATION/gnupg/gpg.conf" "$DESTHOMELOCATION/.gnupg/gpg.conf"
 fi
 
 AUR_HELPER="yay"
