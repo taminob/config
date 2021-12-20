@@ -52,7 +52,7 @@ if ! checkifcontinue "If config location is not /sync/config, make sure to run (
 	exit
 fi
 
-if checkifcontinue "Apply configuration to $CONFIGLOCATION?"; then
+if checkifcontinue "Apply configuration to $DESTCONFIGLOCATION?"; then
 	install_config "$CONFIGLOCATION/sway/$HOSTNAME.conf" "$DESTCONFIGLOCATION/sway/config" true
 
 	install_config "$CONFIGLOCATION/mako/$HOSTNAME.conf" "$DESTCONFIGLOCATION/mako/config" true
@@ -81,6 +81,8 @@ if checkifcontinue "Apply configuration to $DESTHOMELOCATION?"; then
 	install_config "$CONFIGLOCATION/.gitconfig" "$DESTHOMELOCATION/.gitconfig"
 	install_config "$CONFIGLOCATION/.tmux.conf" "$DESTHOMELOCATION/.tmux.conf"
 	install_config "$CONFIGLOCATION/.nanorc" "$DESTHOMELOCATION/.nanorc"
+
+	install_config "$CONFIGLOCATION/gpg-agent.conf" "$DESTHOMELOCATION/.gnupg/gpg-agent.conf" true
 fi
 
 AUR_HELPER="yay"
