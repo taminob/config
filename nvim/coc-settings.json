@@ -1,0 +1,10 @@
+{
+  "languageserver": {
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    }
+  },
+  "rust-analyzer.serverPath": "/usr/bin/rust-analyzer"
+}
