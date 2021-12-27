@@ -2,6 +2,8 @@
 
 set -e
 
+mkdir -pv /opt/bin
+
 cp -v /home/me/sync/config/configuration/scripts/battery_warning.sh /opt/bin/
 cp -v /home/me/sync/config/configuration/files/battery_warning.timer /usr/lib/systemd/user/
 cp -v /home/me/sync/config/configuration/files/battery_warning.service /usr/lib/systemd/user/
