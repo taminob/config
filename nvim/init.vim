@@ -26,6 +26,15 @@ set termguicolors
 lua require'colorizer'.setup()
 set notermguicolors
 
+" overwrite goto definition keys with coc
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gD <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+nnoremap <C-i> :Format<CR>
+
 " which-key init
 "lua require'which-key'.setup()
 
