@@ -9,9 +9,9 @@ make
 gcc gdb
 git-lfs
 go
-gperf
-gperftools
-jdk-openjdk
+gperf # perfect hash function generator
+gperftools # malloc and nifty performance analysis tools
+#jdk-openjdk
 nasm
 npm
 rustup
@@ -22,7 +22,11 @@ python-virtualenv
 qemu edk2-ovmf
 sqlite
 postgresql
+mariadb-clients
+php
 bc
 patch
-perf
+perf # linux kernel performance auditing tool
 flex
+hyperfine # benchmarking tool
+cloc # count lines of code

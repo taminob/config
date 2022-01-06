@@ -2,8 +2,10 @@ base
 linux
 linux-firmware
 linux-headers
+nftables
 sudo
 git
+vim
 arch-install-scripts
 fakeroot
 jfsutils

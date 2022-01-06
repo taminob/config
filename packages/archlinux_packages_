@@ -6,3 +6,4 @@ tlp tlp-rdw acpi_call smartmontools x86_energy_perf_policy ethtool
 powertop
 xf86-video-nouveau bumblebee bbswitch
 xf86-input-synaptics
+egl-wayland

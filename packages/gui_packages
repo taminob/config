@@ -1,5 +1,7 @@
 sway
 xorg-xwayland
+xdg-desktop-portal-wlr gst-plugin-pipewire pipewire-pulse
+glfw-wayland
 swayidle
 swaylock
 waybar

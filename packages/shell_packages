@@ -2,9 +2,12 @@ bat
 bluez-utils
 bluez-tools
 cpio
-exa
+exa # ls alternative
+dua-cli # du alternative
+#ncdu # du ncurses ui
 expac
-ffmpeg
+ffmpeg ladspa
+pdftk # shell pdf tool
 fzf
 gnu-netcat
 htop
@@ -21,15 +24,17 @@ pkgconf
 pkgfile
 stress
 the_silver_searcher
-ranger w3m
+ranger #w3m
 rclone
 rsync
+hdparm # drive parameter utility
 tmux
 trash-cli
 tree
 unzip
 pacman-contrib
 usbutils
+lsof
 wget
 whois
 zip
@@ -37,4 +42,5 @@ zsh-autosuggestions
 zsh-completions
 zsh-doc
 zsh-syntax-highlighting
+powerline
 tk

@@ -12,8 +12,8 @@ gimp
 gnome-disk-utility
 godot
 gparted xorg-xhost
-gwenview
-inkscape
+gwenview qt5-imageformats
+inkscape gvfs
 k3b
 kamoso
 kate
@@ -21,6 +21,7 @@ konsole
 krita
 ksysguard
 libreoffice-fresh
+musescore
 nextcloud-client
 obs-studio
 okular
@@ -32,8 +33,9 @@ qtcreator qbs
 seahorse
 signal-desktop
 speedcrunch
-telegram-desktop
+telegram-desktop webkit2gtk
 thunderbird
+torbrowser-launcher
 vlc
 xournalpp
 youtube-dl
