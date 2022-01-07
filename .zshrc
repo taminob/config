@@ -40,6 +40,7 @@ alias la='ls -a'
 alias ll='ls -l'
 alias vim='nvim'
 alias sudo='sudo ' # enable alias checking after sudo
+alias lessh='LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s" less -R ' # enable src highlighting in less
 #alias venv='source venv/bin/activate' # use functions to allow parameters
 #alias open='xdg-open' # use functions to allow parameters
 
