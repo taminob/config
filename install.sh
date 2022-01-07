@@ -105,6 +105,10 @@ if checkifcontinue "Install aur packages?"; then
 	$AUR_HELPER -S --needed $(cat "$PACKAGE_LIST_LOCATION/aur_packages_")
 fi
 
+if checkifcontinue "Install custom packages?"; then
+	packages/install_custom.sh
+fi
+
 if checkifcontinue "Change default shell to zsh?"; then
 	chsh -s /usr/bin/zsh
 fi
