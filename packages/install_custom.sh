@@ -4,7 +4,7 @@ set -e
 
 PACKAGES_GIT_DIR=/tmp/arch-packages
 
-i=0
+i=""
 while [ -e "$PACKAGES_GIT_DIR"$i ]; do
 	i=`expr $i + 1`
 done
