@@ -26,7 +26,9 @@ for file_name in packages_list:
 	file_packages = []
 	with open(file_name, "r") as f:
 		for line in f:
-			file_packages.extend(line.split())
+			comment_pos = line.find("#")
+			line_end = len(line) if (comment_pos < 0) else comment_pos
+			file_packages.extend(line[:line_end].split())
 	all_packages[file_name] = file_packages
 
 installed_packages = get_pacman("-Q")
