@@ -17,6 +17,7 @@ inkscape gvfs
 k3b
 kamoso
 kate
+kdenlive # video editing
 konsole
 krita
 ksysguard
@@ -38,4 +39,4 @@ thunderbird
 torbrowser-launcher
 vlc
 xournalpp
-youtube-dl
+yt-dlp # youtube-dl fork
