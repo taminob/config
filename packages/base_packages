@@ -1,4 +1,4 @@
-base
+base # base-devel (not a package)
 linux
 linux-firmware
 linux-headers

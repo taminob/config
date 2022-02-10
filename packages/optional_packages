@@ -1,7 +1,6 @@
 kde-cli-tools
 bluez-hid2hci
-python-language-server
-syslog-ng logrotate
+syslog-ng # logrotate
 wireguard-tools
 hyphen-en hyphen-de
 texlive-core texlive-fontsextra texlive-formatsextra texlive-latexextra texlive-bibtexextra
@@ -10,7 +9,6 @@ pandoc
 android-tools
 wireshark-qt wireshark-cli
 net-tools
-openbsd-netcat
 metasploit
 ghidra
 traceroute
@@ -20,12 +18,10 @@ syncthing
 samba
 veracrypt
 xterm
-x11-ssh-askpass
 kitty
 qreator
 mplayer
 sdl
-aribb24
 celt
 reiserfsprogs
 unixodbc

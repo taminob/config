@@ -6,10 +6,10 @@ exa # ls alternative
 dua-cli # du alternative
 #ncdu # du ncurses ui
 expac
-ffmpeg ladspa
+ffmpeg
 pdftk # shell pdf tool
 fzf
-gnu-netcat
+openbsd-netcat
 htop
 iw
 lynx

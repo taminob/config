@@ -1,6 +1,7 @@
 #!/bin/python
 
 import glob
+import os
 import socket
 import subprocess
 import sys
@@ -36,7 +37,7 @@ installed_packages = get_pacman("-Q")
 for file_name, packages in all_packages.items():
 	diff = [item for item in packages if item not in installed_packages]
 	if len(diff) > 0:
-		print("not installed " + file_name + ": ", diff)
+		print("not installed " + os.path.basename(file_name) + ": ", diff)
 	else:
 		print("all " + file_name + " installed!")
 
