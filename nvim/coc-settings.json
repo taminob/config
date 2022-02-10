@@ -1,10 +1,12 @@
 {
   "languageserver": {
     "dockerfile": {
-      "command": "docker-langserver",
+      "command": "/usr/bin/docker-langserver",
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
     }
   },
-  "rust-analyzer.serverPath": "/usr/bin/rust-analyzer"
+  "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/usr/bin/black"
 }
