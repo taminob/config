@@ -25,9 +25,13 @@ setopt interactivecomments # allow comments outside of scripts
 setopt autocd # use "cd" in front of stand-alone path
 
 HISTFILE=~/.zhistory
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=20000
+SAVEHIST=10000
 setopt hist_ignore_space # ignore commands in history starting with at least one space
+#setopt share_history # share history between multiple instances; do not set inc_append_history at the same time
+setopt inc_append_history # immediately write to history file, do not wait until exit
+setopt hist_ignore_dups # do not record consecutive duplicates
+setopt hist_expire_dups_first # delete duplicate entries first when trimming history
 
 # always start in command mode (vicmd) instead of insert mode (viins)
 #zle-line-init() { zle -K vicmd; }
@@ -49,7 +53,13 @@ venv() {
 	if [ -z "$1" ]; then
 		venv_path="venv"
 	fi
-	source "$venv_path"/bin/activate
+	if [ "$1" = "exit" ]; then
+		deactivate
+	elif [ "$1" = "create" ]; then
+		python -m venv venv
+	else
+		source "$venv_path"/bin/activate
+	fi
 }
 
 open() {
