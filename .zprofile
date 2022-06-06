@@ -20,6 +20,7 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 	export GTK_THEME=Breeze-Dark
 	export GTK2_RC_FILES=$HOME/.gtkrc-2.0
 #	export GTK_USE_PORTAL=1 # use qt file dialog for gtk applications
+	export _JAVA_AWT_WM_NONREPARENTING=1
 
 #	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock # fix SWAYSOCK
 
