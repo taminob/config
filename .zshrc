@@ -69,6 +69,11 @@ open() {
 	echo "$@" | xargs -n 1 -P "$MAX_PARALLEL" xdg-open
 }
 
+update() {
+	sudo pacman -Sy --noconfirm archlinux-keyring
+	sudo pacman -Syu
+}
+
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
 
