@@ -12,8 +12,8 @@ DESTHOMELOCATION="$HOME"
 
 create_config_path()
 {
-	config_path=$1
-	mkdir -p $config_path
+	config_path="$1"
+	mkdir -p "$config_path"
 }
 
 install_config()
@@ -48,7 +48,7 @@ if ! checkifcontinue 'If username is not "me", make sure to run (in config locat
 	exit
 fi
 
-if ! checkifcontinue "If config location is not /sync/config, make sure to run (in config location): find . -type f -exec sed -i "s/\/sync\/config/\/path\/to\/config/" {} +"; then
+if ! checkifcontinue 'If config location is not /sync/config, make sure to run (in config location): find . -type f -exec sed -i "s/\/sync\/config/\/path\/to\/config/" {} +'; then
 	exit
 fi
 
