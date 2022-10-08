@@ -22,7 +22,7 @@ install_config()
 	dest_path="$2"
 	create_dir=$3
 	if [ create_dir ]; then
-		create_config_path $(dirname $dest_path)
+		create_config_path "$(dirname "$dest_path")"
 	fi
 	ln -sivn "$source_path" "$dest_path"
 }
@@ -30,7 +30,7 @@ install_config()
 checkifcontinue()
 {
 	read -p "$1 (y/N)" CONTINUE
-	if [ "$CONTINUE" == "y" -o "$CONTINUE" == "Y" ]; then
+	if [ "$CONTINUE" = "y" -o "$CONTINUE" = "Y" ]; then
 		true
 	elif [ -z "$CONTINUE" -o "$CONTINUE" != "n" -o "$CONTINUE" != "N" ]; then
 		false
