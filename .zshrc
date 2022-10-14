@@ -12,7 +12,7 @@ source $ZSH_HOME/git.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
-source /usr/share/doc/pkgfile/command-not-found.zsh
+source $ZSH_HOME/command-not-found.zsh
 source $ZSH_HOME/agnoster.zsh-theme
 
 # enable completion for ".."
@@ -42,6 +42,7 @@ alias ls='exa -h'
 alias l='ls'
 alias la='ls -a'
 alias ll='ls -l'
+#alias du='dua'
 alias mv='mv -i'
 alias cp='cp -i'
 alias vim='nvim'
