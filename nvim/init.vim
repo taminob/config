@@ -62,6 +62,9 @@ command Uncolorize set notermguicolors
 " write as root (terminal required error)
 "command Sudow :w !sudo tee \%
 
+" Exit with a non-zero exit code (e.g. abort git commit)
+command Abort :cq
+
 " delay in ms after which vim writes swap file (also updates gitgutter)
 set updatetime=500
 
@@ -104,9 +107,10 @@ autocmd BufWinEnter * normal zR " unfold all folds at begin
 
 " show tabs and eol
 set list
-set listchars=tab:▸\ ,trail:·,eol:¬
+set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:⎵,precedes:<,extends:>
 
 " configure search (smartcase: case-sensitive when any uppercase char)
+" append '\C' to enable case-sensitive search for lowercase patterns
 set incsearch ignorecase smartcase hlsearch
 
 " increase command history
@@ -188,8 +192,10 @@ nnoremap vi. T.vt.
 " allow to surround in visual mode
 " TODO: remove " because it makes selecting register impossible?
 vnoremap " c""<Esc>Pzo| " zo to open fold (in case autofold is enabled)
+vnoremap ' c''<Esc>Pzo| " zo to open fold (in case autofold is enabled)
 vnoremap ( c()<Esc>Pzo| " zo to open fold (in case autofold is enabled)
 vnoremap { c{}<Esc>Pzo| " zo to open fold (in case autofold is enabled)
+vnoremap [ c[]<Esc>Pzo| " zo to open fold (in case autofold is enabled)
 vnoremap \| c\|\|<Esc>Pzo| " zo to open fold (in case autofold is enabled)
 vnoremap ` c``<Esc>Pzo| " zo to open fold (in case autofold is enabled)
 
@@ -230,6 +236,7 @@ nnoremap <C-h> :%s///g
 vnoremap <C-h> :s///g| " '<,'> inserted automatically
 
 " use 2 spaces instead of tabs
-nnoremap <C-t> :set tabstop=2 shiftwidth=2 expandtab<CR>
+nnoremap <C-t> :set tabstop=4 shiftwidth=4 expandtab<CR>
+nnoremap <Leader><C-t> :set tabstop=2 shiftwidth=2 expandtab<CR>
 
 "free: C-p, C-n, C-k, C-j, C-h, C-s, C-q, C-@, C-_
