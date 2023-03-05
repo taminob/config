@@ -15,6 +15,8 @@
 	hide-dirty = 1
 [pull]
 	ff = only
+[push]
+	default = current
 [commit]
 	gpgsign = true
 [fetch]
@@ -23,3 +25,31 @@
 	parallel = 0
 [submodule]
 	recurse = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+	s = status
+	d = diff
+	ds = diff --staged
+	stash-abort = reset --merge
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)' --all
+	edit-unmerged = \
+		"!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; nvim `f`"
+	add-unmerged = \
+		"!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+	diff-untracked = \
+		"! for next in $( git ls-files --others --exclude-standard ) ; do git diff --no-index /dev/null $next; done;"
+	# git follow <filename> <linefrom> [<lineto>] [<starting_at_ref>]
+	follow = "!                                                      \
+		if [[ $1 == \"/\"* ]]; then                                  \
+			FILE="$1";                                               \
+		else                                                         \
+			FILE="${GIT_PREFIX}$1";                                  \
+		fi;                                                          \
+		git log -wbp --ignore-blank-lines --topo-order -uL $2,${3:-$2}:\"${FILE}\" $4;' --"
+#[merge]
+#	conflictstyle = diff3
