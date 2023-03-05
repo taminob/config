@@ -4,6 +4,7 @@ bluez-tools
 cpio
 exa # ls alternative
 dua-cli # du alternative
+fd # find alternative
 #ncdu # du ncurses ui
 expac
 ffmpeg
