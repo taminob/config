@@ -53,13 +53,13 @@ alias lessh='LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s" less -R ' # enable 
 #alias open='xdg-open' # use functions to allow parameters
 
 venv() {
-	venv_path="$1"
-	if [ -z "$1" ]; then
+	venv_path="${1}"
+	if [ -z "${1}" ]; then
 		venv_path="venv"
 	fi
-	if [ "$1" = "exit" ]; then
+	if [ "${1}" = "exit" ]; then
 		deactivate
-	elif [ "$1" = "create" ]; then
+	elif [ "${1}" = "create" ]; then
 		python -m venv venv
 	else
 		source "$venv_path"/bin/activate
@@ -67,13 +67,21 @@ venv() {
 }
 
 open() {
-	MAX_PARALLEL=8
-	echo "$@" | xargs -n 1 -P "$MAX_PARALLEL" xdg-open
+	for arg in "${@}"; do
+		xdg-open "${arg}"
+	done
 }
 
 update() {
 	sudo pacman -Sy --noconfirm archlinux-keyring
 	sudo pacman -Syu
+}
+resume() {
+	if [ "${1}" ]; then
+		bg # continue in background
+	else
+		fg # continue in foreground
+	fi
 }
 
 # custom shortcuts
@@ -123,4 +131,3 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
-
