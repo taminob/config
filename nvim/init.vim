@@ -198,12 +198,12 @@ nnoremap K gk
 "endfunction
 "nnoremap <silent> t :exec JumpWithT()<CR>
 
-" use tab for completion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" use tab for completion; coc#pum#confirm() for confirming selection
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
-" use <c-space>for trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
+" use Ctrl+Space to show completions
+inoremap <silent><expr> <C-space> coc#refresh()
 
 " search for visual selection and exit visual mode
 vnoremap / *<CR><Esc>
