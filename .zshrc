@@ -42,9 +42,10 @@ alias ls='exa -h'
 alias l='ls'
 alias la='ls -a'
 alias ll='ls -l'
-#alias du='dua'
-alias mv='mv -i'
-alias cp='cp -i'
+alias mv='mv -vi'
+alias cp='cp -vi'
+alias ln='ln -v'
+alias mkdir='mkdir -v'
 alias vim='nvim'
 alias sudo='sudo ' # enable alias checking after sudo
 alias lessh='LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s" less -R ' # enable src highlighting in less
