@@ -10,6 +10,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 Plug 'airblade/vim-gitgutter'
 "Plug 'tpope/vim-fugitive'
+Plug 'zivyangll/git-blame.vim'
 "Plug 'ervandew/supertab'
 Plug 'tpope/vim-commentary' " comment support; shortcut: 'gcc'
 
@@ -21,6 +22,9 @@ function NvimSetup()
 :CocInstall coc-markdownlint coc-texlab coc-json coc-sh coc-rust-analyzer coc-clangd coc-cmake coc-css coc-html coc-tsserver coc-pyright
 endfunction
 command NvimSetup exec NvimSetup()
+
+" set <leader> key to <space>
+let mapleader = " "
 
 " colorizer init
 set termguicolors
@@ -38,6 +42,9 @@ nnoremap <C-i> :Format<CR>
 
 " which-key init
 "lua require'which-key'.setup()
+
+" git-blame keybinding
+nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
 
 " signcolumn style for gitgutter
 highlight SignColumn guibg=bg ctermbg=NONE
