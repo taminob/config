@@ -87,6 +87,18 @@ resume() {
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
 
+# search history:
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
+# OR
+_history-incremental-search-backward () {
+    zle .history-incremental-search-backward $BUFFER
+}
+zle -N history-incremental-search-backward _history-incremental-search-backward
+
+# this line is actually not necessary since this is default.
+bindkey '^R' history-incremental-search-backward
+
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key
