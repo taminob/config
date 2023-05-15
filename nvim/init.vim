@@ -23,6 +23,8 @@ function NvimSetup()
 endfunction
 command NvimSetup exec NvimSetup()
 
+command NvimEdit edit ~/.config/nvim/init.vim
+
 " set <leader> key to <space>
 let mapleader = " "
 
@@ -115,6 +117,9 @@ set incsearch ignorecase smartcase hlsearch
 
 " increase command history
 set history=1000
+
+" use clipboard for yanking
+set clipboard+=unnamedplus
 
 """ predefined macros
 " custom comment macro
