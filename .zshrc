@@ -67,8 +67,17 @@ venv() {
 }
 
 open() {
+	if [ ! "${OPEN_LIMIT}" ]; then
+		OPEN_LIMIT=16
+	fi
+	if [ $# -gt "${OPEN_LIMIT}" ]; then
+		echo "Trying to open ${#} different files - limit is set to ${OPEN_LIMIT}"
+	fi
 	for arg in "${@}"; do
-		xdg-open "${arg}"
+		xdg-open "${arg}" & # start them in parallel in background
+	done
+	for arg in "${@}"; do
+		fg # bring them to foreground
 	done
 }
 
