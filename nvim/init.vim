@@ -38,9 +38,24 @@ nnoremap <silent> gd <Plug>(coc-definition)
 nnoremap <silent> gD <Plug>(coc-implementation)
 nnoremap <silent> gr <Plug>(coc-references)
 
+" switch between source/header files
+command -nargs=0 ClangdSwitchSourceHeader CocCommand clangd.switchSourceHeader
+" resolve symbol info under the cursor
+command -nargs=0 ClangdSymbolInfo CocCommand clangd.symbolInfo
+" show memory usage
+command -nargs=0 ClangdMemoryUsage CocCommand clangd.memoryUsage
+" show AST
+command -nargs=0 -range ClangdAst CocCommand clangd.ast
+
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 nnoremap <C-i> :Format<CR>
+vnoremap <C-i> <Plug>(coc-format-selected)
+
+" LSP features
+nnoremap gR <Plug>(coc-refactor)
+nnoremap gN <Plug>(coc-rename)
+nnoremap gq <Plug>(coc-fix-current)
 
 " which-key init
 "lua require'which-key'.setup()
