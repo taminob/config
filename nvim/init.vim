@@ -63,6 +63,9 @@ nnoremap gq <Plug>(coc-fix-current)
 " git-blame keybinding
 nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
 
+" vim-commentary: C++ use // instead of block comment
+autocmd FileType cpp setlocal commentstring=//\ %s
+
 " signcolumn style for gitgutter
 highlight SignColumn guibg=bg ctermbg=NONE
 highlight GitGutterAdd    guifg=#009900 ctermfg=2 ctermbg=NONE
