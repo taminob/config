@@ -7,6 +7,7 @@ cmake
 docker
 make
 gcc gdb
+valgrind
 git-lfs
 go
 gperf # perfect hash function generator
