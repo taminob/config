@@ -15,12 +15,13 @@ gperftools # malloc and nifty performance analysis tools
 #jdk-openjdk
 nasm
 npm
-rustup rust-analyzer
+rustup # rust-analyzer
 python2
 python
 python-pip # python-pycryptodome python-lockfile
 python-virtualenv
 python-lsp-server
+python-black
 qemu edk2-ovmf
 sqlite
 postgresql
