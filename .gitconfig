@@ -51,5 +51,7 @@
 			FILE="${GIT_PREFIX}$1";                                  \
 		fi;                                                          \
 		git log -wbp --ignore-blank-lines --topo-order -uL $2,${3:-$2}:\"${FILE}\" $4;' --"
+	origin-reset = \
+		"! git reset \"$(git rev-parse --abbrev-ref --symbolic-full-name @{u})\""
 #[merge]
 #	conflictstyle = diff3
