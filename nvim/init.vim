@@ -48,6 +48,13 @@ command -nargs=0 ClangdMemoryUsage CocCommand clangd.memoryUsage
 " show AST
 command -nargs=0 -range ClangdAst CocCommand clangd.ast
 
+" rust-analyze
+command -nargs=0 RustFlycheck CocCommand rust-analyzer.runFlycheck
+" docs for symbol under the cursor
+command -nargs=0 RustDoc CocCommand rust-analyzer.openDocs
+" docs for symbol under the cursor
+command -nargs=0 RustExplain CocCommand rust-analyzer.explainError
+
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocActionAsync('format')
 nnoremap <C-i> :Format<CR>
