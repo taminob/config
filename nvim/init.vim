@@ -13,6 +13,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
 "Plug 'ervandew/supertab'
 Plug 'tpope/vim-commentary' " comment support; shortcut: 'gcc'
+Plug 'ethanholz/nvim-lastplace' " remember cursor position in files
 
 call plug#end()
 
@@ -59,6 +60,9 @@ nnoremap gq <Plug>(coc-fix-current)
 
 " which-key init
 "lua require'which-key'.setup()
+
+" lastplace init
+lua require 'nvim-lastplace'.setup{}
 
 " git-blame keybinding
 nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
