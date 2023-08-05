@@ -54,7 +54,7 @@
 	"clock": {
 		"timezone": "Europe/Berlin",
 		"locale": "en_GB.UTF8", // monday first day of week
-		"format": "{:%H:%M:%S}",
+		"format": "{:%H:%M:%OS}",
 		"interval": 1,
 		"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
 		"format-alt": "{:%d.%m.%Y}"
