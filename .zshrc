@@ -38,7 +38,7 @@ setopt hist_expire_dups_first # delete duplicate entries first when trimming his
 #zle -N zle-line-init
 
 #alias ls='ls --color=auto'
-alias ls='exa -h'
+alias ls='eza --header'
 alias l='ls'
 alias la='ls -a'
 alias ll='ls -l'

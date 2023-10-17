@@ -2,7 +2,7 @@ bat
 bluez-utils
 bluez-tools
 cpio
-exa # ls alternative
+eza # ls alternative
 dua-cli # du alternative
 fd # find alternative
 #ncdu # du ncurses ui
