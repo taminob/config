@@ -22,6 +22,11 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 #	export GTK_USE_PORTAL=1 # use qt file dialog for gtk applications
 	export _JAVA_AWT_WM_NONREPARENTING=1
 
+	# chinese pinyin input method
+	export GTK_IM_MODULE=fcitx
+	export QT_IM_MODULE=fcitx
+	export XMODIFIERS=@im=fcitx
+
 #	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock # fix SWAYSOCK
 
 	export $(gnome-keyring-daemon --start --components=ssh,secrets)
