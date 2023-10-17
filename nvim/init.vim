@@ -55,7 +55,9 @@ command -nargs=0 RustDoc CocCommand rust-analyzer.openDocs
 " docs for symbol under the cursor
 command -nargs=0 RustExplain CocCommand rust-analyzer.explainError
 
-" Add `:Format` command to format current buffer.
+" Add `:Format` command to format current buffer;
+" use 'set filetype=<filetype>' if filetype cannot be deduced from
+" file extension
 command! -nargs=0 Format :call CocActionAsync('format')
 nnoremap <C-i> :Format<CR>
 vnoremap <C-i> <Plug>(coc-format-selected)
@@ -115,6 +117,10 @@ set mouse=a
 set autoindent noexpandtab tabstop=4 shiftwidth=4 softtabstop=-1
 filetype plugin on
 filetype indent on
+
+" tabs/spaces based on filetype
+autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
 
 set fileformat=unix
 set fileformats=unix,dos
