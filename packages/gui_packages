@@ -9,7 +9,7 @@ wofi
 mako
 jq
 wl-clipboard
-polkit-gnome
+polkit-kde-agent
 grim
 slurp
 wf-recorder
