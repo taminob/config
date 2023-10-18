@@ -18,6 +18,11 @@ window#waybar.solo {
     background: rgba(35, 31, 32, 0.85);
 }
 
+#window {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
 #workspaces {
     margin: 0 5px;
 }
@@ -41,9 +46,13 @@ window#waybar.solo {
     color:      rgba(238, 46, 36, 1);
 }
 
-#mode, #network, #pulseaudio, #idle_inhibitor, #custom-mail {
+#mode, #network, #pulseaudio, #custom-mail {
     margin:     0px 6px 0px 10px;
     min-width:  25px;
+}
+
+#idle_inhibitor, #custom-notification_inhibitor {
+	min-width:  25px;
 }
 
 #cpu, #memory, #temperature, #battery, #backlight {
