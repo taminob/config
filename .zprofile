@@ -27,7 +27,7 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 	export QT_IM_MODULE=fcitx
 	export XMODIFIERS=@im=fcitx
 
-#	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock # fix SWAYSOCK
+#	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep --exact --newest sway).sock # fix SWAYSOCK
 
 	export $(gnome-keyring-daemon --start --components=ssh,secrets)
 
