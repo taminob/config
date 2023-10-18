@@ -59,8 +59,8 @@ command -nargs=0 RustExplain CocCommand rust-analyzer.explainError
 " use 'set filetype=<filetype>' if filetype cannot be deduced from
 " file extension
 command! -nargs=0 Format :call CocActionAsync('format')
-nnoremap <C-i> :Format<CR>
-vnoremap <C-i> <Plug>(coc-format-selected)
+nnoremap <C-q> :Format<CR>
+vnoremap <C-q> <Plug>(coc-format-selected)
 
 " LSP features
 nnoremap gR <Plug>(coc-refactor)
