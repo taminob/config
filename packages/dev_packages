@@ -13,7 +13,9 @@ go
 gperf # perfect hash function generator
 gperftools # malloc and nifty performance analysis tools
 #jdk-openjdk
+meson
 nasm
+ninja
 npm
 rustup # rust-analyzer
 python2
