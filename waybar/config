@@ -167,7 +167,7 @@
 	},
 	"custom/nextcloud": {
 		"exec": "nextcloud",
-		"exec-if": "pgrep nextcloud"
+		"exec-if": "! pgrep nextcloud"
 	},
 	"custom/media": {
 		"format": "{icon} {}",
