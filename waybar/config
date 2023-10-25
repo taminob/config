@@ -70,6 +70,7 @@
 		"on-click": "sh $HOME/sync/config/waybar/notification_inhibitor.sh toggle && pkill -44 waybar",
 		"exec": "sh $HOME/sync/config/waybar/notification_inhibitor.sh",
 		"return-type": "json",
+		// interval necessary until next waybar release
 		"interval": 100000,
 		"signal": 10
 	},

@@ -10,8 +10,8 @@ if [ "${1}" = "toggle" ]; then
 	fi
 else
 	if [ "${current_mode}" = "default" ]; then
-		echo '{"alt": "notifications_on"}'
+		echo '{"alt": "notifications_on", "tooltip": "activated"}'
 	else
-		echo '{"alt": "notifications_off"}'
+		echo '{"alt": "notifications_off", "tooltip": "deactivated"}'
 	fi
 fi
