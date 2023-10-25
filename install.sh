@@ -24,7 +24,7 @@ install_config()
 	if [ create_dir ]; then
 		create_config_path "$(dirname "$dest_path")"
 	fi
-	ln -sivn "$source_path" "$dest_path"
+	ln -sivn "$source_path" "$dest_path" || echo "Installation skipped"
 }
 
 checkifcontinue()
