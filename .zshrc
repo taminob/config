@@ -94,6 +94,31 @@ resume() {
 	fi
 }
 
+git_setup_repo() {
+	git_url="${1}"
+	target_directory="${2}"
+	if [ ! "${git_url}" ]; then
+		echo "Please specify git url as first argument!"
+		return
+	fi
+	if [ ! "${target_directory}" ]; then
+		target_directory="$(basename "${git_url}")"
+		target_directory="${target_directory%.git}"
+		echo "No target directory specified - falling back to '${target_directory}'!"
+	fi
+	if [ -d "${target_directory}" ]; then
+		echo "'${target_directory}' does already exist!"
+		return
+	fi
+	git clone --bare "${git_url}" "${target_directory}/.git" &&
+	cd "${target_directory}" &&
+
+	default_branch="$(git remote show origin | grep 'HEAD branch: ' | cut -d ' ' -f 5)" &&
+	default_branch="$(echo "${default_branch}" | sed -e 's/\//_/g')"
+	git worktree add "${default_branch}" "${default_branch}" &&
+	cd "${default_branch}"
+}
+
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
 
