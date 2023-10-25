@@ -31,7 +31,15 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 
 	export $(gnome-keyring-daemon --start --components=ssh,secrets)
 
-	echo "$(date): start sway" >> $HOME/.swaylog
-	exec >> $HOME/.swaylog 2>&1
+	LOGS_DIRECTORY="${HOME}/.logs"
+	SWAYLOGS_DIRECTORY="${LOGS_DIRECTORY}/sway"
+	if [ ! -d "${LOGS_DIRECTORY}" ]; then
+		mkdir -p "${LOGS_DIRECTORY}"
+		mkdir -p "${SWAYLOGS_DIRECTORY}"
+	fi
+
+	export CURRENT_SWAYLOG_FILE="${SWAYLOGS_DIRECTORY}/$(date +'%Y-%m-%d_%H-%M-%S')"
+	echo "$(date): start sway" >> "${CURRENT_SWAYLOG_FILE}"
+	exec >> "${CURRENT_SWAYLOG_FILE}" 2>&1
 	exec sway
 fi
