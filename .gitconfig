@@ -21,7 +21,7 @@
 	gpgsign = true
 [fetch]
 	prune = true
-	recurseSubmodules = on-demand
+	recurseSubmodules = yes
 	parallel = 0
 [submodule]
 	recurse = true
