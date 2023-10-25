@@ -72,6 +72,7 @@ open() {
 	fi
 	if [ $# -gt "${OPEN_LIMIT}" ]; then
 		echo "Trying to open ${#} different files - limit is set to ${OPEN_LIMIT}"
+		return
 	fi
 	for arg in "${@}"; do
 		xdg-open "${arg}" & # start them in parallel in background
