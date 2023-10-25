@@ -84,6 +84,8 @@ if checkifcontinue "Apply configuration to $DESTHOMELOCATION?"; then
 
 	install_config "$CONFIGLOCATION/gnupg/gpg-agent.conf" "$DESTHOMELOCATION/.gnupg/gpg-agent.conf" true
 	install_config "$CONFIGLOCATION/gnupg/gpg.conf" "$DESTHOMELOCATION/.gnupg/gpg.conf"
+
+	install_config "$CONFIGLOCATION/ssh/config" "$DESTHOMELOCATION/.ssh/config" true
 fi
 
 AUR_HELPER="yay"
