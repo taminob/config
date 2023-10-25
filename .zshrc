@@ -119,6 +119,19 @@ git_setup_repo() {
 	cd "${default_branch}"
 }
 
+git_add_fork() {
+	new_origin="${1}"
+	if [ ! "${new_origin}" ]; then
+		echo "Please specify git url of fork as first argument!"
+		return
+	fi
+	upstream_remote="$(git remote get-url origin)"
+	git remote set-url origin "${new_origin}"
+	git remote add upstream "${upstream_remote}"
+
+	git remote -v
+}
+
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
 
