@@ -73,6 +73,9 @@ command! -nargs=0 Format :call CocActionAsync('format')
 nnoremap <C-q> :Format<CR>
 vnoremap <C-q> <Plug>(coc-format-selected)
 
+" Do not add newline at end of file
+command NoNewlineEOF :set noeol nofixeol
+
 " LSP features
 nnoremap gR <Plug>(coc-refactor)
 nnoremap gN <Plug>(coc-rename)
