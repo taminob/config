@@ -52,6 +52,11 @@ alias lessh='LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s" less -R ' # enable 
 #alias venv='source venv/bin/activate' # use functions to allow parameters
 #alias open='xdg-open' # use functions to allow parameters
 
+# generate shell completions
+compdef _gnu_generic dua
+compdef _gnu_generic eza
+compdef _gnu_generic blkid
+
 venv() {
 	venv_path="${1}"
 	if [ -z "${1}" ]; then
