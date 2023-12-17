@@ -33,7 +33,7 @@ let mapleader = " "
 " colorizer init
 set termguicolors
 lua require'colorizer'.setup()
-set notermguicolors
+"set notermguicolors " uncomment to start in notermguicolors mode
 
 " overwrite goto definition keys with coc
 nnoremap <silent> gd <Plug>(coc-definition)
@@ -102,7 +102,34 @@ highlight GitGutterDelete guifg=#ff2222 ctermfg=1 ctermbg=NONE
 " reload config
 command Reload :source $MYVIMRC
 
-" enable/disable colorize plugin
+" style for coc
+highlight Visual guibg=#555555 guifg=NONE
+highlight Conceal guibg=#777777 guifg=NONE
+highlight TermCursorNC cterm=reverse gui=reverse
+highlight Cursor gui=reverse
+highlight VisualNC gui=reverse
+highlight NonText gui=NONE guifg=#7aa6da
+highlight Pmenu guibg=#c397d8 guifg=Black
+highlight PmenuSel guibg=LightGrey guifg=Black
+highlight link CocMenuSel PmenuSel
+highlight CocInlayHint guifg=#666666 ctermfg=DarkGrey
+highlight FgCocErrorFloatBgCocFloating guibg=NONE guifg=#a30000 " alternative: guibg=#ffaaff
+highlight FgCocWarningFloatBgCocFloating guibg=NONE guifg=#737000
+highlight FgCocHintFloatBgCocFloating guibg=NONE guifg=#777777
+highlight FgCocInfoFloatBgCocFloating guibg=NONE guifg=#447046
+highlight Type gui=NONE guifg=#63bc81
+highlight PreProc guifg=#5fd7ff
+highlight Constant guifg=#c397d6
+highlight Comment guifg=#7f977f
+highlight Identifier gui=bold guifg=#70c0c2
+highlight Special guifg=#ffd1a8
+highlight MatchParen guibg=#76695d
+highlight Statement gui=NONE guifg=#e6bb22
+
+" fix for transparent cursor
+let g:coc_disable_transparent_cursor=1
+
+" enable/disable colorize plugin and gui colors
 command Colorize set termguicolors
 command Uncolorize set notermguicolors
 
