@@ -14,6 +14,7 @@ Plug 'zivyangll/git-blame.vim'
 "Plug 'ervandew/supertab'
 Plug 'tpope/vim-commentary' " comment support; shortcut: 'gcc'
 Plug 'ethanholz/nvim-lastplace' " remember cursor position in files
+Plug 'sakhnik/nvim-gdb'
 
 call plug#end()
 
