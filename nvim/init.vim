@@ -39,6 +39,16 @@ nnoremap <silent> gd <Plug>(coc-definition)
 nnoremap <silent> gD <Plug>(coc-implementation)
 nnoremap <silent> gr <Plug>(coc-references)
 
+nnoremap <silent> gh :call <SID>show_documentation()<CR>
+"autocmd CursorHold * silent call <SID>show_documentation()
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
 " switch between source/header files
 command -nargs=0 ClangdSwitchSourceHeader CocCommand clangd.switchSourceHeader
 " resolve symbol info under the cursor
