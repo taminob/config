@@ -27,6 +27,9 @@ command NvimSetup exec NvimSetup()
 
 command NvimEdit edit ~/.config/nvim/init.vim
 
+" reload config
+command NvimReload :source $MYVIMRC
+
 " set <leader> key to <space>
 let mapleader = " "
 
@@ -98,9 +101,6 @@ highlight SignColumn guibg=bg ctermbg=NONE
 highlight GitGutterAdd    guifg=#009900 ctermfg=2 ctermbg=NONE
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3 ctermbg=NONE
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1 ctermbg=NONE
-
-" reload config
-command Reload :source $MYVIMRC
 
 " style for coc
 highlight Visual guibg=#555555 guifg=NONE
