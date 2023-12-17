@@ -58,16 +58,22 @@ compdef _gnu_generic eza
 compdef _gnu_generic blkid
 
 venv() {
-	venv_path="${1}"
-	if [ -z "${1}" ]; then
-		venv_path="venv"
-	fi
+	function get_venv_path()
+	{
+		venv_path="${1}"
+		if [ ! "${venv_path}" ]; then
+			venv_path="venv"
+		fi
+		echo "${venv_path}"
+	}
 	if [ "${1}" = "exit" ]; then
 		deactivate
 	elif [ "${1}" = "create" ]; then
-		python -m venv venv
+		venv_path="$(get_venv_path "${2}")"
+		python -m venv "${venv_path}"
 	else
-		source "$venv_path"/bin/activate
+		venv_path="$(get_venv_path "${1}")"
+		source "${venv_path}"/bin/activate
 	fi
 }
 
@@ -122,6 +128,7 @@ git_setup_repo() {
 	default_branch="$(echo "${default_branch}" | sed -e 's/\//_/g')"
 	git worktree add "${default_branch}" "${default_branch}" &&
 	cd "${default_branch}"
+	git submodule update --init --recursive --progress
 }
 
 git_add_fork() {
@@ -135,6 +142,11 @@ git_add_fork() {
 	git remote add upstream "${upstream_remote}"
 
 	git remote -v
+	git fetch --all
+}
+
+docker_latest_bash() {
+	docker exec -it "$(docker ps --latest --format "{{.ID}}")" bash
 }
 
 # custom shortcuts
