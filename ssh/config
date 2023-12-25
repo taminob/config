@@ -1,2 +1,6 @@
+IgnoreUnknown AddKeysToAgent,UseKeychain
 AddKeysToAgent yes
+UseKeychain yes
 IdentitiesOnly yes
+
+Include /home/me/sync/config/ssh/config.d/*
