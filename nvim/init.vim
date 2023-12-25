@@ -109,6 +109,7 @@ highlight TermCursorNC cterm=reverse gui=reverse
 highlight Cursor gui=reverse
 highlight VisualNC gui=reverse
 highlight NonText gui=NONE guifg=#7aa6da
+highlight Cursor gui=reverse
 highlight Pmenu guibg=#c397d8 guifg=Black
 highlight PmenuSel guibg=LightGrey guifg=Black
 highlight link CocMenuSel PmenuSel
@@ -176,7 +177,8 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 " enable spell checking
 "set spell
 
-" fold based on syntax; open:'zo',close:'zc',open_all:'zr',close_all:'zm'
+" fold based on syntax; open:'zo',close:'zc',open_all:'zr',close_all:'zm';
+" use 'foldmethod=manual' to allow manual creation of folds using 'zf'
 set foldmethod=syntax
 autocmd FileType python setlocal foldmethod=indent
 set foldopen+=jump,search " open fold on jump/search
