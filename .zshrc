@@ -9,9 +9,9 @@ compinit
 
 ZSH_HOME=/home/me/sync/config/zsh
 source $ZSH_HOME/git.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=magenta'
 source $ZSH_HOME/command-not-found.zsh
 source $ZSH_HOME/agnoster.zsh-theme
 
