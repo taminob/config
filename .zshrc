@@ -97,6 +97,10 @@ open() {
 }
 
 update() {
+	# in case of failure, run:
+	# sudo rm -vi /etc/pacman.d/gnupg &&
+	# sudo pacman-key --init &&
+	# sudo pacman-key --populate
 	sudo pacman -Sy --noconfirm archlinux-keyring
 	sudo pacman -Syu
 }
