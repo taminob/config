@@ -7,6 +7,9 @@ zstyle :compinstall filename '/home/me/.zshrc'
 autoload -Uz compinit
 compinit
 
+# display if tab completion has no match
+zstyle ':completion:*:warnings' format '%F{red}No matches%f'
+
 ZSH_HOME=/home/me/sync/config/zsh
 source $ZSH_HOME/git.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
