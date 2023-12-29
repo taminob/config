@@ -82,6 +82,9 @@ if checkifcontinue "Apply configuration to $DESTHOMELOCATION?"; then
 	install_config "$CONFIGLOCATION/.tmux.conf" "$DESTHOMELOCATION/.tmux.conf"
 	install_config "$CONFIGLOCATION/.nanorc" "$DESTHOMELOCATION/.nanorc"
 
+	install_config "$CONFIGLOCATION/.clang-format" "$DESTHOMELOCATION/.clang-format"
+	install_config "$CONFIGLOCATION/.clang-tidy" "$DESTHOMELOCATION/.clang-tidy"
+
 	install_config "$CONFIGLOCATION/gnupg/gpg-agent.conf" "$DESTHOMELOCATION/.gnupg/gpg-agent.conf" true
 	install_config "$CONFIGLOCATION/gnupg/gpg.conf" "$DESTHOMELOCATION/.gnupg/gpg.conf"
 
