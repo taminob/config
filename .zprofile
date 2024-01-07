@@ -32,13 +32,15 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 	export $(gnome-keyring-daemon --start --components=ssh,secrets)
 
 	LOGS_DIRECTORY="${HOME}/.logs"
-	SWAYLOGS_DIRECTORY="${LOGS_DIRECTORY}/sway"
-	if [ ! -d "${LOGS_DIRECTORY}" ]; then
-		mkdir -p "${LOGS_DIRECTORY}"
-		mkdir -p "${SWAYLOGS_DIRECTORY}"
-	fi
+	mkdir -p "${LOGS_DIRECTORY}"
+	SWAY_LOGS_DIRECTORY="${LOGS_DIRECTORY}/sway"
+	mkdir -p "${SWAY_LOGS_DIRECTORY}"
+	NEXTCLOUD_LOGS_DIRECTORY="${LOGS_DIRECTORY}/nextcloud"
+	mkdir -p "${NEXTCLOUD_LOGS_DIRECTORY}"
 
-	export CURRENT_SWAYLOG_FILE="${SWAYLOGS_DIRECTORY}/$(date +'%Y-%m-%d_%H-%M-%S')"
+	export CURRENT_SESSION_LOG_FILE="$(date +'%Y-%m-%d_%H-%M-%S')"
+
+	CURRENT_SWAYLOG_FILE="${SWAY_LOGS_DIRECTORY}/${CURRENT_SESSION_LOG_FILE}"
 	echo "$(date): start sway" >> "${CURRENT_SWAYLOG_FILE}"
 	exec >> "${CURRENT_SWAYLOG_FILE}" 2>&1
 	exec sway

@@ -14,7 +14,6 @@
 	],
 	"modules-right": [
 		"tray",
-		"custom/nextcloud",
 		"cpu",
 		"temperature",
 		"memory",
@@ -165,10 +164,6 @@
 			]
 		},
 		"on-click": "sh $HOME/sync/config/waybar/audio_management.sh"
-	},
-	"custom/nextcloud": {
-		"exec": "nextcloud",
-		"exec-if": "! pgrep nextcloud"
 	},
 	"custom/media": {
 		"format": "{icon} {}",
