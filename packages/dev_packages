@@ -9,6 +9,8 @@ make
 gcc gdb
 valgrind
 git-lfs
+perl-authen-sasl # git send-email TLS support
+tig
 go
 gperf # perfect hash function generator
 gperftools # malloc and nifty performance analysis tools
