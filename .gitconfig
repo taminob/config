@@ -17,9 +17,11 @@
 	ff = only
 [push]
 	default = current
+	autoSetupRemote = true
 [commit]
 	gpgsign = true
 [fetch]
+	all = true
 	prune = true
 	recurseSubmodules = yes
 	parallel = 0
@@ -53,5 +55,6 @@
 		git log -wbp --ignore-blank-lines --topo-order -uL $2,${3:-$2}:\"${FILE}\" $4;' --"
 	origin-reset = \
 		"! git reset \"$(git rev-parse --abbrev-ref --symbolic-full-name @{u})\""
+	submodule-update = git submodule update --init --recursive --progress
 #[merge]
 #	conflictstyle = diff3
