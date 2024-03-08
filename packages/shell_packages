@@ -45,3 +45,4 @@ zsh-doc
 zsh-syntax-highlighting
 powerline
 tk
+zoxide # cd alternative ("z")

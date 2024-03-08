@@ -18,6 +18,9 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=magenta'
 source $ZSH_HOME/command-not-found.zsh
 source $ZSH_HOME/agnoster.zsh-theme
 
+# initialize zoxide; cd ("z") alternative
+eval "$(zoxide init zsh)"
+
 # enable completion for ".."
 zstyle ':completion:*' special-dirs true
 
