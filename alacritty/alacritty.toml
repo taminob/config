@@ -57,6 +57,8 @@ magenta = "#75617b"
 cyan = "#5b7d78"
 white = "#828482"
 
-[shell]
+[terminal]
+
+[terminal.shell]
 program = "/usr/bin/tmux"
-args = [ "new-session", "-D" ]
+args = [ "-L", "alacritty_tmux", "new-session" ]
