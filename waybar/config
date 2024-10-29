@@ -69,8 +69,6 @@
 		"on-click": "sh $HOME/sync/config/waybar/notification_inhibitor.sh toggle && pkill -44 waybar",
 		"exec": "sh $HOME/sync/config/waybar/notification_inhibitor.sh",
 		"return-type": "json",
-		// interval necessary until next waybar release
-		"interval": 100000,
 		"signal": 10
 	},
 	"tray": {
@@ -102,9 +100,11 @@
 			"on-click-right": "mode",
 			"on-click-forward": "tz_up",
 			"on-click-backward": "tz_down",
+			"on-click-middle": "shift_reset",
 			"on-scroll-up": "shift_up",
 			"on-scroll-down": "shift_down"
-		}
+		},
+		"smooth-scrolling-threshold": 2.0
 	},
 	"cpu": {
 		"format": "{usage}% ",
@@ -113,11 +113,13 @@
 		"on-click": "ksysguard"
 	},
 	"memory": {
-		"format": "{}% "
+		"interval": 10,
+		"format": "{}% ",
+		"tooltip-format": "main memory {used}/{total}GiB | swap {swapUsed}/{swapTotal}GiB"
 	},
 	"temperature": {
 		// "thermal-zone": 2,
-		"hwmon-path": "/sys/class/hwmon/hwmon1/temp2_input",
+		"hwmon-path": "/sys/class/hwmon/hwmon0/temp2_input",
 		"critical-threshold": 80,
 		// "format-critical": "{temperatureC}°C {icon}",
 		"format": "{temperatureC}°C {icon}",
