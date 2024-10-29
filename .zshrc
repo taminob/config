@@ -5,7 +5,7 @@ bindkey -v # use vim keybindings
 zstyle :compinstall filename '/home/me/.zshrc'
 
 autoload -Uz compinit
-compinit
+compinit -u
 
 # display if tab completion has no match
 zstyle ':completion:*:warnings' format '%F{red}No matches%f'
@@ -104,8 +104,12 @@ update() {
 	# sudo rm -vi /etc/pacman.d/gnupg &&
 	# sudo pacman-key --init &&
 	# sudo pacman-key --populate
-	sudo pacman -Sy --noconfirm archlinux-keyring
-	sudo pacman -Syu
+	sudo sh -c 'reflector --protocol https --latest 50 --fastest 8 --age 24 --sort rate --country France,Germany,Switzerland,Austria > /tmp/mirrorlist' &&
+		sudo mv /tmp/mirrorlist /etc/pacman.d/mirrorlist
+	systemd-inhibit sudo pacman -Sy --noconfirm archlinux-keyring
+	systemd-inhibit sudo pacman -Syu
+
+	sudo pkgfile --update
 }
 resume() {
 	if [ "${1}" ]; then
@@ -135,9 +139,9 @@ git_setup_repo() {
 	cd "${target_directory}" &&
 
 	default_branch="$(git remote show origin | grep 'HEAD branch: ' | cut -d ' ' -f 5)" &&
-	default_branch="$(echo "${default_branch}" | sed -e 's/\//_/g')"
+	default_branch="$(echo "${default_branch}" | sed -e 's/\//_/g')" &&
 	git worktree add "${default_branch}" "${default_branch}" &&
-	cd "${default_branch}"
+	cd "${default_branch}" &&
 	git submodule update --init --recursive --progress
 }
 
