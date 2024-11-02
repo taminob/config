@@ -38,6 +38,7 @@ usbutils
 lsof
 wget
 whois
+which
 zip
 zsh-autosuggestions
 zsh-completions

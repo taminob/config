@@ -1,8 +1,8 @@
 yay
 kernel-modules-hook
-oh-my-zsh-git
-snx-800007075 lib32-libstdc++5
+#oh-my-zsh-git
 zotero
 #gobuster dirbuster-wordlists # dirbuster alternative
 dockerfile-language-server
 clipman
+cmake-format cmake-lint

@@ -3,8 +3,8 @@ bluez-hid2hci
 syslog-ng # logrotate
 wireguard-tools
 hyphen-en hyphen-de
-texlive-core texlive-fontsextra texlive-formatsextra texlive-latexextra texlive-bibtexextra
-texlive-langgreek texlive-publishers texlive-science biber
+texlive-core texlive-fontsextra texlive-formatsextra texlive-latexextra texlive-bibtexextra texlive-binextra
+texlive-langgreek texlive-langenglish texlive-langgerman texlive-publishers texlive-science biber
 pandoc
 android-tools
 wireshark-qt wireshark-cli

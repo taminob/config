@@ -2,8 +2,8 @@ sway
 xorg-xwayland
 xdg-desktop-portal-wlr gst-plugin-pipewire pipewire-pulse
 glfw-wayland
-swayidle
-swaylock
+swaybg swayidle swaylock
+wl-mirror
 waybar
 wofi
 mako
@@ -15,9 +15,9 @@ slurp
 wf-recorder
 playerctl
 wayvnc
-qt5ct
+qt5ct qt6ct
 plasma-workspace-wallpapers
-breeze
+breeze breeze5
 breeze-gtk
 breeze-icons
 fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-lua fcitx5-qt fcitx5-chinese-addons fcitx5-pinyin-zhwiki

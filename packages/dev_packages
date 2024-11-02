@@ -4,7 +4,7 @@ bison
 boost
 clang llvm lld lldb
 cmake
-docker
+docker docker-compose docker-buildx
 make
 gcc gdb
 valgrind
@@ -18,6 +18,7 @@ gperftools # malloc and nifty performance analysis tools
 meson
 nasm
 ninja
+nix direnv just
 npm
 rustup # rust-analyzer
 python2
