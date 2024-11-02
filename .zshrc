@@ -104,13 +104,19 @@ update() {
 	# sudo rm -vi /etc/pacman.d/gnupg &&
 	# sudo pacman-key --init &&
 	# sudo pacman-key --populate
-	sudo sh -c 'reflector --protocol https --latest 50 --fastest 8 --age 24 --sort rate --country France,Germany,Switzerland,Austria > /tmp/mirrorlist' &&
-		sudo mv /tmp/mirrorlist /etc/pacman.d/mirrorlist
-	systemd-inhibit sudo pacman -Sy --noconfirm archlinux-keyring
+
+	if [ "${1}" = "mirror" ] || [ "${1}" = "full" ]; then
+		reflector --protocol https --latest 50 --fastest 8 --age 24 --sort rate --country France,Germany,Switzerland,Austria --verbose > /tmp/mirrorlist &&
+		sudo mv -i /tmp/mirrorlist /etc/pacman.d/mirrorlist &&
+	elif [ "${1}" = "full" ]; then
+		sudo pkgfile --update &&
+	fi
+
+	systemd-inhibit sudo pacman -Sy --noconfirm archlinux-keyring &&
 	systemd-inhibit sudo pacman -Syu
 
-	sudo pkgfile --update
 }
+
 resume() {
 	if [ "${1}" ]; then
 		bg # continue in background
@@ -151,11 +157,11 @@ git_add_fork() {
 		echo "Please specify git url of fork as first argument!"
 		return
 	fi
-	upstream_remote="$(git remote get-url origin)"
-	git remote set-url origin "${new_origin}"
-	git remote add upstream "${upstream_remote}"
+	upstream_remote="$(git remote get-url origin)" &&
+	git remote set-url origin "${new_origin}" &&
+	git remote add upstream "${upstream_remote}" &&
 
-	git remote -v
+	git remote -v &&
 	git fetch --all
 }
 
