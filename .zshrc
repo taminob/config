@@ -72,14 +72,26 @@ venv() {
 		fi
 		echo "${venv_path}"
 	}
+
+	function activate_venv()
+	{
+		venv_path="${1}"
+		source "${venv_path}"/bin/activate
+	}
+
 	if [ "${1}" = "exit" ]; then
 		deactivate
 	elif [ "${1}" = "create" ]; then
 		venv_path="$(get_venv_path "${2}")"
 		python -m venv "${venv_path}"
+		activate_venv "${venv_path}"
+	elif [ "${1}" = "jupyter" ]; then
+		venv_path="$(get_venv_path "${2}")"
+		activate_venv "${venv_path}"
+		pip install jupyter jupyterlab-lsp
 	else
 		venv_path="$(get_venv_path "${1}")"
-		source "${venv_path}"/bin/activate
+		activate_venv "${venv_path}"
 	fi
 }
 
