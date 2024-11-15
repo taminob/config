@@ -91,10 +91,17 @@ if checkifcontinue "Apply configuration to $DESTHOMELOCATION?"; then
 	install_config "$CONFIGLOCATION/ssh/config" "$DESTHOMELOCATION/.ssh/config" true
 fi
 
+read -p "Perform package installation without confirmation? (y/N)" PACKAGE_INSTALL_CONFIRM
+if [ "$PACKAGE_INSTALL_CONFIRM" = "y" -o "$PACKAGE_INSTALL_CONFIRM" = "Y" ]; then
+	PACMAN_FLAGS="--noconfirm"
+elif [ -z "$PACKAGE_INSTALL_CONFIRM" -o "$PACKAGE_INSTALL_CONFIRM" != "n" -o "$PACKAGE_INSTALL_CONFIRM" != "N" ]; then
+	PACMAN_FLAGS=""
+fi
+
 AUR_HELPER="yay"
 AUR_BUILD_PATH="/tmp/$AUR_HELPER"
 if checkifcontinue "Install AUR helper ($AUR_HELPER)?"; then
-	sudo pacman -S --needed git fakeroot debugedit binutils make gcc
+	sudo pacman -S "${PACMAN_FLAGS}" --needed git fakeroot debugedit binutils make gcc
 	mkdir -p "$AUR_BUILD_PATH" && cd "$AUR_BUILD_PATH" && git clone "https://aur.archlinux.org/$AUR_HELPER.git" "$AUR_BUILD_PATH" && makepkg -si
 fi
 
@@ -104,11 +111,11 @@ if checkifcontinue "Inspect package diff?"; then
 fi
 
 if checkifcontinue "Install packages?"; then
-	sudo pacman -S --needed $("$PACKAGE_LIST_LOCATION/packages.sh")
+	sudo pacman -S "${PACMAN_FLAGS}" --needed $("$PACKAGE_LIST_LOCATION/packages.sh")
 fi
 
 if checkifcontinue "Install aur packages?"; then
-	$AUR_HELPER -S --needed $(cat "$PACKAGE_LIST_LOCATION/aur_packages_")
+	$AUR_HELPER -S "${PACMAN_FLAGS}" --needed $(cat "$PACKAGE_LIST_LOCATION/aur_packages_")
 fi
 
 if checkifcontinue "Install custom packages?"; then
