@@ -10,17 +10,19 @@ expac
 ffmpeg
 pdftk # shell pdf tool
 fzf
-openbsd-netcat
+openbsd-netcat # gnu-netcat
 htop
+nethogs # tool for network traffic monitoring per process
+nvtop # tool for GPU load monitoring
 iw
 lynx
 man-db
 man-pages
 tldr
-mlocate
+plocate
 nano
 neofetch
-neovim
+neovim python-pynvim
 pkgconf
 pkgfile
 stress
@@ -47,3 +49,9 @@ zsh-syntax-highlighting
 powerline
 tk
 zoxide # cd alternative ("z")
+nvme-cli # NVME SSD metadata
+git-delta # diff alternative
+lshw # hardware inspection
+restic # backup tool
+reflector # arch-linux mirror update
+time

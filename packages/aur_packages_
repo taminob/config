@@ -2,7 +2,15 @@ yay
 kernel-modules-hook
 #oh-my-zsh-git
 zotero
-#gobuster dirbuster-wordlists # dirbuster alternative
 dockerfile-language-server
 clipman
 cmake-format cmake-lint
+#debtap # .deb archive conversion to pacman package
+
+# hacking
+arpfox
+gobuster dirbuster-wordlists # dirbuster alternative
+intel-oneapi-compiler-shared-opencl-cpu
+python-pygdbmi
+hcxtool
+# pyrit

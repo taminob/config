@@ -1,10 +1,12 @@
 autoconf
 automake
+bazel
 bison
 boost
 clang llvm lld lldb
-cmake
+cmake extra-cmake-modules
 docker docker-compose docker-buildx
+doxygen graphviz
 make
 gcc gdb
 valgrind
@@ -21,13 +23,12 @@ ninja
 nix direnv just
 npm
 rustup # rust-analyzer
-python2
 python
-python-pip # python-pycryptodome python-lockfile
+python-pip python-setuptools # python-pycryptodome python-lockfile
 python-virtualenv
-python-lsp-server
+python-lsp-server python-pylint python-mccabe
 python-black
-qemu edk2-ovmf
+qemu-desktop edk2-ovmf
 sqlite
 postgresql
 mariadb-clients
@@ -38,3 +39,4 @@ perf # linux kernel performance auditing tool
 flex
 hyperfine # benchmarking tool
 cloc # count lines of code
+binwalk # search for text in binaries

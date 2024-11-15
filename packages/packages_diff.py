@@ -15,7 +15,7 @@ if len(sys.argv) > 1:
 packages_list = glob.glob(packages_path + "/*_packages")
 packages_list.append(packages_path + "/aur_packages_")
 if os.path.exists(platform_packages):
-    packages_list.append(packages_path + "/" + platform_packages)
+	packages_list.append(packages_path + "/" + platform_packages)
 
 def get_pacman(args):
 	installed_packages = []
@@ -29,7 +29,9 @@ for file_name in packages_list:
 	with open(file_name, "r") as f:
 		for line in f:
 			comment_pos = line.find("#")
-			line_end = len(line) if (comment_pos < 0) else comment_pos
+			line_end = len(line) - 1 if (comment_pos < 0) else comment_pos
+			if line_end == 0:
+				continue
 			file_packages.extend(line[:line_end].split())
 	all_packages[file_name] = file_packages
 

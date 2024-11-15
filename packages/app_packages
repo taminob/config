@@ -2,8 +2,10 @@ alacritty
 ark p7zip
 audacity
 blender
+calibre
 chromium
 code
+corectrl mesa-utils
 discord
 dolphin
 firefox-developer-edition
@@ -20,7 +22,6 @@ kate
 kdenlive # video editing
 konsole
 krita
-ksysguard
 libreoffice-fresh
 musescore
 nextcloud-client
@@ -29,7 +30,6 @@ okular
 openshot
 pavucontrol
 pdfarranger
-pulseeffects
 qtcreator qbs
 seahorse
 signal-desktop

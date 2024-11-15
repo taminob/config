@@ -3,9 +3,9 @@ bluez-hid2hci
 syslog-ng # logrotate
 wireguard-tools
 hyphen-en hyphen-de
-texlive-core texlive-fontsextra texlive-formatsextra texlive-latexextra texlive-bibtexextra texlive-binextra
+texlive-basic texlive-fontsextra texlive-formatsextra texlive-latexextra texlive-bibtexextra texlive-binextra
 texlive-langgreek texlive-langenglish texlive-langgerman texlive-publishers texlive-science biber
-pandoc
+pandoc-cli
 android-tools
 wireshark-qt wireshark-cli
 net-tools
@@ -22,7 +22,6 @@ kitty
 qreator
 mplayer
 sdl
-celt
 reiserfsprogs
 unixodbc
 #wmctrl # window manager shell control

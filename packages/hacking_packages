@@ -5,15 +5,10 @@ dsniff
 wireshark-qt wireshark-cli
 tor torbrowser-launcher
 traceroute
-gnu-netcat
-hcxtool hcxdumptool
+hcxdumptool
 reaver
 hashcat
 macchanger
-
-# yay
-arpfox
-dirbuster-wordlists
-gobuster
-intel-oneapi-compiler-shared-opencl-cpu
-python-pygdbmi
+wifite bully
+cowpatty
+john
