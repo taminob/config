@@ -14,7 +14,8 @@ if len(sys.argv) > 1:
 
 packages_list = glob.glob(packages_path + "/*_packages")
 packages_list.append(packages_path + "/aur_packages_")
-packages_list.append(packages_path + "/" + platform_packages)
+if os.path.exists(platform_packages):
+    packages_list.append(packages_path + "/" + platform_packages)
 
 def get_pacman(args):
 	installed_packages = []
