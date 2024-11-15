@@ -94,7 +94,7 @@ fi
 AUR_HELPER="yay"
 AUR_BUILD_PATH="/tmp/$AUR_HELPER"
 if checkifcontinue "Install AUR helper ($AUR_HELPER)?"; then
-	sudo pacman -S --needed fakeroot debugedit binutils
+	sudo pacman -S --needed git fakeroot debugedit binutils make gcc
 	mkdir -p "$AUR_BUILD_PATH" && cd "$AUR_BUILD_PATH" && git clone "https://aur.archlinux.org/$AUR_HELPER.git" "$AUR_BUILD_PATH" && makepkg -si
 fi
 
