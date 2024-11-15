@@ -1,6 +1,6 @@
 # .zprofile
 
-if [ "$(tty)" = "/dev/tty1" ] ; then
+function export_environment_variables() {
 	# environment variables
 	export QT_QPA_PLATFORM=wayland # force X11: xcb
 	export GDK_BACKEND="wayland,x11"
@@ -26,11 +26,9 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 	export GTK_IM_MODULE=fcitx
 	export QT_IM_MODULE=fcitx
 	export XMODIFIERS=@im=fcitx
+}
 
-#	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep --exact --newest sway).sock # fix SWAYSOCK
-
-	export $(gnome-keyring-daemon --start --components=ssh,secrets)
-
+function setup_logging() {
 	LOGS_DIRECTORY="${HOME}/.logs"
 	mkdir -p "${LOGS_DIRECTORY}"
 	SWAY_LOGS_DIRECTORY="${LOGS_DIRECTORY}/sway"
@@ -39,9 +37,29 @@ if [ "$(tty)" = "/dev/tty1" ] ; then
 	mkdir -p "${NEXTCLOUD_LOGS_DIRECTORY}"
 
 	export CURRENT_SESSION_LOG_FILE="$(date +'%Y-%m-%d_%H-%M-%S')"
+}
 
+function start_services() {
+	export $(gnome-keyring-daemon --start --components=ssh,secrets)
+}
+
+function start_sway() {
 	CURRENT_SWAYLOG_FILE="${SWAY_LOGS_DIRECTORY}/${CURRENT_SESSION_LOG_FILE}"
 	echo "$(date): start sway" >> "${CURRENT_SWAYLOG_FILE}"
 	exec >> "${CURRENT_SWAYLOG_FILE}" 2>&1
 	exec sway
+
+	# use this command to fix SWAYSOCK environment variable after sway startup
+#	export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep --exact --newest sway).sock
+}
+
+function start_desktop() {
+	export_environment_variables
+	setup_logging
+	start_services
+	start_sway
+}
+
+if [ "$(tty)" = "/dev/tty1" ] ; then
+	start_desktop
 fi
