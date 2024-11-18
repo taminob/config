@@ -43,11 +43,19 @@ def get_user_home() -> str:
     return get_user_info().pw_dir
 
 
+_hostname: str | None = None
+
+
 def get_hostname() -> str:
+    if _hostname:
+        return _hostname
     return socket.gethostname()
 
 
-_config_path = None
+DEFAULT_CONFIG_PATH = "/home/me/sync/config"
+_config_path: str | None = None
+
+
 def get_config_path() -> str:
     if _config_path:
         return _config_path
@@ -237,11 +245,13 @@ config_files: list[Config] = [
         "{config_source}/sway/{hostname}.conf",
         "{config_destination}/sway/config",
         make_destination=True,
+        config_type=".config",
     ),
     Config(
         "{config_source}/mako/{hostname}.conf",
         "{config_destination}/mako/config",
         make_destination=True,
+        config_type=".config",
     ),
     Config(
         "{config_source}/waybar",
@@ -282,15 +292,18 @@ config_files: list[Config] = [
 ]
 
 
-def fix_path_in_configs(config_path: str = ""):
+def fix_path_in_configs():
     def run_replace_command(pattern):
         command = ["find", ".", "-type", "f", "-exec", "sed", "-i", pattern, "{}", "+"]
         subprocess.run(command, cwd=get_config_path())
 
     user_name: str = get_user_info().pw_name
-    run_replace_command(f"'s/\\/home\\/me/\\/home\\/{user_name}/'")
+    run_replace_command(f"s/\\/home\\/me/\\/home\\/{user_name}/")
 
-    if len(config_path) > 0:
+    config_path = get_config_path()
+    if config_path != DEFAULT_CONFIG_PATH:
+        user_home: str = get_user_home()
+        config_path.removeprefix(f"/home/{user_home}")
         escaped_path = config_path.replace("/", "\\/")
         run_replace_command(f"s/\\/sync\\/config/{escaped_path}/")
 
@@ -311,18 +324,21 @@ def install_configs(config_filter: Callable[[Config], bool] = lambda _: True):
         if not config_filter(config):
             continue
 
-        destination_parent_dir: str = os.path.dirname(config.destination)
+        source = expand_config_path(config.source)
+        destination = expand_config_path(config.destination)
+
+        destination_parent_dir: str = os.path.dirname(destination)
         if config.make_destination:
             os.makedirs(destination_parent_dir, exist_ok=True)
 
-        if os.path.exists(config.destination):
-            print(f"Creating backup of '{config.destination}' in /tmp/")
+        if os.path.exists(destination):
+            print(f"Creating backup of '{destination}' in /tmp/")
             os.makedirs(f"/tmp/{destination_parent_dir}", exist_ok=True)
-            shutil.move(config.destination, f"/tmp/{config.destination}")
+            shutil.move(destination, f"/tmp/{destination}")
 
         os.symlink(
-            expand_config_path(config.source),
-            expand_config_path(config.destination),
+            source,
+            destination,
             config.is_directory,
         )
 
@@ -336,7 +352,7 @@ def install_aur_helper(aur_helper: str, no_confirm: bool = False):
         ["fakeroot", "debugedit", "binutils", "make", "gcc"], no_confirm=no_confirm
     )
 
-    if git and has_git_support:
+    if has_git_support and git:
         git.Repo.clone_from(GIT_URL, REPO_DIR)
     else:
         subprocess.run(["git", "clone", GIT_URL, REPO_DIR])
@@ -390,40 +406,56 @@ def create_user_directories():
 
 def create_user_symlinks():
     home: str = get_user_home()
-    os.symlink(f"{home}/software/tests", f"{home}/tests")
-    os.symlink(f"{home}/sync/arch", f"{home}/arch")
+    if not os.path.exists(f"{home}/tests") and not os.path.islink(f"{home}/tests"):
+        os.symlink(f"{home}/software/tests", f"{home}/tests")
+    if not os.path.exists(f"{home}/arch") and not os.path.islink(f"{home}/arch"):
+        os.symlink(f"{home}/sync/arch", f"{home}/arch")
 
 
 def main():
     parser = argparse.ArgumentParser("config install")
     parser.add_argument("--noconfirm", action="store_true")
-    parser.add_argument("--aur_helper", type=str, default="yay")
+    parser.add_argument("--aur-helper", type=str, default="yay")
+    parser.add_argument("--no-aur", action="store_true")
     parser.add_argument("--allow-root", action="store_true")
     parser.add_argument("--config-path", type=str)
+    parser.add_argument("--hostname", type=str)
     parser.add_argument("--install-custom", action="store_true")
-    parser.add_argument("--install", type=list[str], default=get_package_categories())
+    parser.add_argument("--packages", type=str, nargs="*", default=get_package_categories())
     parser.add_argument("--create-user-files", action="store_true")
-    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--configs", default=CONFIG_TYPES)
     args = parser.parse_args()
 
-    if args.config_path:
-        fix_path_in_configs(args.config_path)
-    else:
-        fix_path_in_configs()
+    get_user_info()  # aborts if root is not allowed
 
-    install_configs()
+    global _config_path
+    _config_path = args.config_path
+    global _hostname
+    _hostname = args.hostname
 
-    install_aur_helper("yay", no_confirm=args.noconfirm)
+    print("Fixing paths in configuration files...")
+    fix_path_in_configs()
+
+    print("Installing configuration files ", args.configs, "...")
+    install_configs(lambda c: c.config_type in args.configs)
+
+    if not args.no_aur:
+        print("Installing AUR helper...")
+        install_aur_helper(args.aur_helper, no_confirm=args.noconfirm)
 
     print("Not installed packages: ", get_packages_diff())
     print("Additionally installed packages: ", get_additionally_installed_packages())
 
-    install_packages(lambda c: c in args.install, no_confirm=args.noconfirm)
+    print("Installing packages ", args.packages, "...")
+    install_packages(lambda c: c in args.packages, no_confirm=args.noconfirm)
     if args.install_custom:
+        print("Installing custom packages...")
         install_custom_packages()
 
+    print("Settings default shell...")
     set_default_shell()
 
+    print("Creating user directories and symlinks...")
     create_user_directories()
     create_user_symlinks()
 
