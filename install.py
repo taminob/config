@@ -55,14 +55,18 @@ def get_config_path() -> str:
 
 
 def perform_package_installation(
-    packages: list[str], no_confirm: bool = False, program: str = "pacman"
+        packages: list[str], no_confirm: bool = False, program: str = "pacman", run_sudo: bool = True
 ):
     args: list[str] = ["-Sy", "--needed"]
 
     if no_confirm:
         args.append("--noconfirm")
 
-    subprocess.run([program] + args + packages)
+    command: list[str] = [program]
+    if run_sudo:
+        command.insert(0, "sudo")
+
+    subprocess.run(command + args + packages)
 
 
 def get_installed_packages(q_args: list[str] = []):
@@ -372,7 +376,7 @@ def install_custom_packages():
 
 
 def set_default_shell():
-    subprocess.run(["chsh", "-s", "/usr/bin/zsh"])
+    subprocess.run(["sudo", "chsh", "-s", "/usr/bin/zsh"])
 
 
 def create_user_directories():
