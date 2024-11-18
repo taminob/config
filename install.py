@@ -3,6 +3,7 @@ import argparse
 import glob
 import os
 import pwd
+import shutil
 import socket
 import subprocess
 
@@ -306,9 +307,14 @@ def install_configs(config_filter: Callable[[Config], bool] = lambda _: True):
         if not config_filter(config):
             continue
 
+        destination_parent_dir: str = os.path.dirname(config.destination)
         if config.make_destination:
-            destination_parent_dir: str = os.path.dirname(config.destination)
             os.makedirs(destination_parent_dir, exist_ok=True)
+
+        if os.path.exists(config.destination):
+            print(f"Creating backup of '{config.destination}' in /tmp/")
+            os.makedirs(f"/tmp/{destination_parent_dir}", exist_ok=True)
+            shutil.move(config.destination, f"/tmp/{config.destination}")
 
         os.symlink(
             expand_config_path(config.source),
@@ -323,7 +329,7 @@ def install_aur_helper(aur_helper: str, no_confirm: bool = False):
 
     # install build dependencies
     perform_package_installation(
-        ["fakeroot", "debugedit", "binutils", "make"], no_confirm=no_confirm
+        ["fakeroot", "debugedit", "binutils", "make", "gcc"], no_confirm=no_confirm
     )
 
     if git and has_git_support:
