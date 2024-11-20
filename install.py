@@ -419,11 +419,13 @@ def main():
     parser.add_argument("--no-aur", action="store_true")
     parser.add_argument("--allow-root", action="store_true")
     parser.add_argument("--config-path", type=str)
+    parser.add_argument("--fix-path", action="store_true")
     parser.add_argument("--hostname", type=str)
     parser.add_argument("--install-custom", action="store_true")
     parser.add_argument("--packages", type=str, nargs="*", default=get_package_categories())
     parser.add_argument("--create-user-files", action="store_true")
-    parser.add_argument("--configs", default=CONFIG_TYPES)
+    parser.add_argument("--configs", type=str, nargs="*", default=CONFIG_TYPES)
+    parser.add_argument("--set-shell", action="store_true")
     args = parser.parse_args()
 
     get_user_info()  # aborts if root is not allowed
@@ -433,8 +435,9 @@ def main():
     global _hostname
     _hostname = args.hostname
 
-    print("Fixing paths in configuration files...")
-    fix_path_in_configs()
+    if args.fix_path:
+        print("Fixing paths in configuration files...")
+        fix_path_in_configs()
 
     print("Installing configuration files ", args.configs, "...")
     install_configs(lambda c: c.config_type in args.configs)
@@ -452,12 +455,14 @@ def main():
         print("Installing custom packages...")
         install_custom_packages()
 
-    print("Settings default shell...")
-    set_default_shell()
+    if args.set_shell:
+        print("Settings default shell...")
+        set_default_shell()
 
-    print("Creating user directories and symlinks...")
-    create_user_directories()
-    create_user_symlinks()
+    if args.create_user_files:
+        print("Creating user directories and symlinks...")
+        create_user_directories()
+        create_user_symlinks()
 
 
 if __name__ == "__main__":
