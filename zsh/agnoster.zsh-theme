@@ -204,7 +204,13 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue $CURRENT_FG '%~'
+  if [ -f "/.dockerenv" ]; then
+    DIR_BG_COLOR="red"
+  else
+    DIR_BG_COLOR="blue"
+  fi
+
+  prompt_segment $DIR_BG_COLOR $CURRENT_FG '%~'
 }
 
 # Virtualenv: current working virtualenv
