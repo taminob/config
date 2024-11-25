@@ -337,7 +337,7 @@ def install_configs(config_filter: Callable[[Config], bool] = lambda _: True):
         if config.make_destination:
             os.makedirs(destination_parent_dir, exist_ok=True)
 
-        if os.path.exists(destination):
+        if os.path.exists(destination) or os.path.islink(destination):
             backup_path: str = f"/tmp/config-install_{INSTALL_TIME}/{destination}"
             print(f"Creating backup of '{destination}' in '{backup_path}'")
             os.makedirs(backup_path, exist_ok=True)
