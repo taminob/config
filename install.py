@@ -1,5 +1,6 @@
 from collections.abc import Callable
 import argparse
+from datetime import datetime
 import glob
 import os
 import pwd
@@ -13,6 +14,8 @@ try:
     has_git_support: bool = True
 except ImportError:
     has_git_support: bool = False
+
+INSTALL_TIME = datetime.now()
 
 
 def abort(message: str, exit_code: int = 1):
@@ -63,7 +66,10 @@ def get_config_path() -> str:
 
 
 def perform_package_installation(
-        packages: list[str], no_confirm: bool = False, program: str = "pacman", run_sudo: bool = True
+    packages: list[str],
+    no_confirm: bool = False,
+    program: str = "pacman",
+    run_sudo: bool = True,
 ):
     args: list[str] = ["-Sy", "--needed"]
 
@@ -332,9 +338,14 @@ def install_configs(config_filter: Callable[[Config], bool] = lambda _: True):
             os.makedirs(destination_parent_dir, exist_ok=True)
 
         if os.path.exists(destination):
-            print(f"Creating backup of '{destination}' in /tmp/")
-            os.makedirs(f"/tmp/{destination_parent_dir}", exist_ok=True)
-            shutil.move(destination, f"/tmp/{destination}")
+            backup_path: str = f"/tmp/config-install_{INSTALL_TIME}/{destination}"
+            print(f"Creating backup of '{destination}' in '{backup_path}'")
+            os.makedirs(backup_path, exist_ok=True)
+            shutil.move(
+                destination,
+                backup_path,
+                copy_function=lambda s, d: shutil.copy(s, d, follow_symlinks=False),
+            )
 
         os.symlink(
             source,
@@ -416,15 +427,19 @@ def main():
     parser = argparse.ArgumentParser("config install")
     parser.add_argument("--noconfirm", action="store_true")
     parser.add_argument("--aur-helper", type=str, default="yay")
-    parser.add_argument("--no-aur", action="store_true")
+    parser.add_argument("--aur", action="store_true")
     parser.add_argument("--allow-root", action="store_true")
     parser.add_argument("--config-path", type=str)
     parser.add_argument("--fix-path", action="store_true")
     parser.add_argument("--hostname", type=str)
     parser.add_argument("--install-custom", action="store_true")
-    parser.add_argument("--packages", type=str, nargs="*", default=get_package_categories())
+    parser.add_argument(
+        "--packages", type=str, nargs="*", choices=get_package_categories(), default=[]
+    )
     parser.add_argument("--create-user-files", action="store_true")
-    parser.add_argument("--configs", type=str, nargs="*", default=CONFIG_TYPES)
+    parser.add_argument(
+        "--configs", type=str, nargs="*", choices=CONFIG_TYPES, default=[]
+    )
     parser.add_argument("--set-shell", action="store_true")
     args = parser.parse_args()
 
@@ -442,7 +457,7 @@ def main():
     print("Installing configuration files ", args.configs, "...")
     install_configs(lambda c: c.config_type in args.configs)
 
-    if not args.no_aur:
+    if args.aur:
         print("Installing AUR helper...")
         install_aur_helper(args.aur_helper, no_confirm=args.noconfirm)
 
