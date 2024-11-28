@@ -2,6 +2,7 @@ autoconf
 automake
 bazel
 bison
+bloaty # binary file size analyzer
 boost
 clang llvm lld lldb
 cmake extra-cmake-modules
