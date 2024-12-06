@@ -66,8 +66,8 @@
 			"notifications_on": "",
 			"notifications_off": ""
 		},
-		"on-click": "sh $HOME/sync/config/waybar/notification_inhibitor.sh toggle && pkill -44 waybar",
-		"exec": "sh $HOME/sync/config/waybar/notification_inhibitor.sh",
+		"on-click": "sh /home/me/sync/config/waybar/notification_inhibitor.sh toggle && pkill -44 waybar",
+		"exec": "sh /home/me/sync/config/waybar/notification_inhibitor.sh",
 		"return-type": "json",
 		"signal": 10
 	},
@@ -138,7 +138,7 @@
 		//"format-alt": "{ifname}: {ipaddr}/{cidr}",
 		"tooltip": true,
 		"tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-		"on-click": "sh $HOME/sync/config/waybar/connection_management.sh"
+		"on-click": "sh /home/me/sync/config/waybar/connection_management.sh"
 	},
 	"bluetooth": {
 		// "format-off": "off",
@@ -165,7 +165,7 @@
 				""
 			]
 		},
-		"on-click": "sh $HOME/sync/config/waybar/audio_management.sh"
+		"on-click": "sh /home/me/sync/config/waybar/audio_management.sh"
 	},
 	"custom/media": {
 		"format": "{icon} {}",
@@ -176,7 +176,7 @@
 			"default": "🎜"
 		},
 		"escape": true,
-		"exec": "$HOME/sync/config/waybar/mediaplayer.py 2> /dev/null", // Script in resources folder
+		"exec": "/home/me/sync/config/waybar/mediaplayer.py 2> /dev/null", // Script in resources folder
 		"on-click": "playerctl play-pause"
 	},
 	"mpd": {
