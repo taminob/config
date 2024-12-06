@@ -83,9 +83,13 @@ def perform_package_installation(
     subprocess.run(command + args + packages)
 
 
-def get_installed_packages(q_args: list[str] = []):
+def get_installed_packages(q_args: list[str] = []) -> list[str]:
+    package_manager: str = "pacman"
+    if not shutil.which(package_manager):
+        warning(f"System does not have package manager '{package_manager}'")
+        return []
     installed_packages = []
-    for line in subprocess.check_output(["pacman", "-Q"] + q_args).splitlines():
+    for line in subprocess.check_output([package_manager, "-Q"] + q_args).splitlines():
         installed_packages.append(str(line, "UTF-8").split(" ", 1)[0])
     return installed_packages
 
