@@ -27,7 +27,11 @@ source "$ZSH_HOME/command-not-found.zsh"
 source "$ZSH_HOME/agnoster.zsh-theme"
 
 # initialize zoxide; cd ("z") alternative
-eval "$(zoxide init zsh)"
+if command -v zoxide 2>&1 >/dev/null ; then
+	eval "$(zoxide init zsh)"
+else
+	echo "zoxide not available"
+fi
 
 # enable completion for ".."
 zstyle ':completion:*' special-dirs true
@@ -52,7 +56,9 @@ setopt hist_expire_dups_first # delete duplicate entries first when trimming his
 #zle -N zle-line-init
 
 #alias ls='ls --color=auto'
-alias ls='eza --header'
+if command -v eza 2>&1 >/dev/null ; then
+	alias ls='eza --header'
+fi
 alias l='ls'
 alias la='ls -a'
 alias ll='ls -l'
@@ -60,7 +66,9 @@ alias mv='mv -vi'
 alias cp='cp -vi'
 alias ln='ln -v'
 alias mkdir='mkdir -v'
-alias vim='nvim'
+if command -v nvim 2>&1 >/dev/null ; then
+	alias vim='nvim'
+fi
 alias sudo='sudo ' # enable alias checking after sudo
 alias lessh='LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s" less -R ' # enable src highlighting in less
 #alias venv='source venv/bin/activate' # use functions to allow parameters
