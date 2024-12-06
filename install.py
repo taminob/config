@@ -35,9 +35,9 @@ def get_config_git_version() -> str:
     return repo.head.commit.hexsha
 
 
-def get_user_info() -> pwd.struct_passwd:
+def get_user_info(allow_root: bool = False) -> pwd.struct_passwd:
     uid: int = os.getuid()
-    if uid == 0:
+    if not allow_root and uid == 0:
         abort("Script can only be run as user 'root' with the '--allow-root' flag")
     return pwd.getpwuid(uid)
 
@@ -443,7 +443,7 @@ def main():
     parser.add_argument("--set-shell", action="store_true")
     args = parser.parse_args()
 
-    get_user_info()  # aborts if root is not allowed
+    get_user_info(args.allow_root)  # aborts if root is not allowed
 
     global _config_path
     _config_path = args.config_path
