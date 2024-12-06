@@ -307,15 +307,12 @@ def fix_path_in_configs():
         command = ["find", ".", "-type", "f", "-exec", "sed", "-i", pattern, "{}", "+"]
         subprocess.run(command, cwd=get_config_path())
 
-    user_name: str = get_user_info(True).pw_name
-    run_replace_command(f"s/\\/home\\/me/\\/home\\/{user_name}/")
-
     config_path = get_config_path()
-    if config_path != DEFAULT_CONFIG_PATH:
-        user_home: str = get_user_home()
-        config_path.removeprefix(f"/home/{user_home}")
-        escaped_path = config_path.replace("/", "\\/")
-        run_replace_command(f"s/\\/sync\\/config/{escaped_path}/")
+
+    escaped_default_path: str = DEFAULT_CONFIG_PATH.replace("/", "\\/")
+    escaped_path = config_path.replace("/", "\\/")
+
+    run_replace_command(f"s/{escaped_default_path}/{escaped_path}/")
 
 
 def install_configs(config_filter: Callable[[Config], bool] = lambda _: True):
@@ -450,7 +447,11 @@ def main():
     get_user_info(args.allow_root)  # aborts if root is not allowed
 
     global _config_path
+    if _config_path and os.path.normpath(args.config_path) != os.path.normpath(get_config_path()):
+        warning(f"Given config path '{_config_path}' does not match actual path '{get_config_path()}'")
     _config_path = args.config_path
+    if _config_path and not os.path.exists(_config_path):
+        abort(f"Given config path '{_config_path}' does not exist")
     global _hostname
     _hostname = args.hostname
 
