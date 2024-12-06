@@ -206,8 +206,10 @@ prompt_hg() {
 prompt_dir() {
   if [ -f "/.dockerenv" ]; then
     DIR_BG_COLOR="red"
+  elif [ "$HOST" = "arch-linux" ] || [ "$HOST" = "archlinux" ]; then
+     DIR_BG_COLOR="blue"
   else
-    DIR_BG_COLOR="blue"
+    DIR_BG_COLOR="cyan"
   fi
 
   prompt_segment $DIR_BG_COLOR $CURRENT_FG '%~'
