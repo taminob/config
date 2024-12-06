@@ -11,12 +11,20 @@ compinit -u
 zstyle ':completion:*:warnings' format '%F{red}No matches%f'
 
 ZSH_HOME=/home/me/sync/config/zsh
-source $ZSH_HOME/git.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source "$ZSH_HOME/git.zsh"
+if [ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+	source "$ZSH_HOME/zsh-autosuggestions.zsh"
+fi
+if [ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+	source "$ZSH_HOME/zsh-syntax-highlighting.zsh"
+fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=magenta'
-source $ZSH_HOME/command-not-found.zsh
-source $ZSH_HOME/agnoster.zsh-theme
+source "$ZSH_HOME/command-not-found.zsh"
+source "$ZSH_HOME/agnoster.zsh-theme"
 
 # initialize zoxide; cd ("z") alternative
 eval "$(zoxide init zsh)"
