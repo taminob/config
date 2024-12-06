@@ -35,7 +35,7 @@ def get_config_git_version() -> str:
     return repo.head.commit.hexsha
 
 
-def get_user_info(allow_root: bool = False) -> pwd.struct_passwd:
+def get_user_info(allow_root: bool) -> pwd.struct_passwd:
     uid: int = os.getuid()
     if not allow_root and uid == 0:
         abort("Script can only be run as user 'root' with the '--allow-root' flag")
@@ -43,7 +43,7 @@ def get_user_info(allow_root: bool = False) -> pwd.struct_passwd:
 
 
 def get_user_home() -> str:
-    return get_user_info().pw_dir
+    return get_user_info(True).pw_dir
 
 
 _hostname: str | None = None
@@ -303,7 +303,7 @@ def fix_path_in_configs():
         command = ["find", ".", "-type", "f", "-exec", "sed", "-i", pattern, "{}", "+"]
         subprocess.run(command, cwd=get_config_path())
 
-    user_name: str = get_user_info().pw_name
+    user_name: str = get_user_info(True).pw_name
     run_replace_command(f"s/\\/home\\/me/\\/home\\/{user_name}/")
 
     config_path = get_config_path()
