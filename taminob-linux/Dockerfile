@@ -2,12 +2,12 @@ FROM archlinux:latest
 LABEL maintainer="taminob" email="dev@tb6.eu" version="1.0" type="archlinux"
 
 # ensure system is up-to-date
-RUN pacman -Sy --noconfirm archlinux-keyring
-RUN pacman -Su --noconfirm
+RUN pacman -Sy --noconfirm archlinux-keyring && pacman -Scc --noconfirm
+RUN pacman -Su --noconfirm && pacman -Scc --noconfirm
 RUN pacman-db-upgrade
 
 # install basic packages for config setup
-RUN pacman -S --noconfirm sudo git zsh python python-pip neovim
+RUN pacman -S --noconfirm sudo git zsh python python-pip neovim && pacman -Scc --noconfirm
 
 RUN echo "root:root" | chpasswd
 RUN useradd -m me
@@ -31,11 +31,11 @@ RUN python ~/sync/config/install.py --noconfirm --no-aur --packages --host tamin
 RUN python ~/sync/config/install.py --noconfirm --packages --configs --host taminob-linux
 
 # install packages
-RUN python ~/sync/config/install.py --noconfirm --no-aur --packages base --configs --host taminob-linux
-RUN python ~/sync/config/install.py --noconfirm --no-aur --packages shell --configs --host taminob-linux
-RUN python ~/sync/config/install.py --noconfirm --no-aur --packages dev --configs --host taminob-linux
-RUN python ~/sync/config/install.py --noconfirm --no-aur --packages font --configs --host taminob-linux
-RUN python ~/sync/config/install.py --noconfirm --no-aur --packages hacking --configs --host taminob-linux
+RUN python ~/sync/config/install.py --noconfirm --no-aur --packages base --configs --host taminob-linux && pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --no-aur --packages shell --configs --host taminob-linux && pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --no-aur --packages dev --configs --host taminob-linux && pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --no-aur --packages font --configs --host taminob-linux && pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --no-aur --packages hacking --configs --host taminob-linux && pacman -Scc --noconfirm
 
 # setup and install neovim plugins
 RUN nvim -c "PlugInstall" -c "qa" && \
