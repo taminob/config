@@ -142,7 +142,92 @@ update() {
 
 	systemd-inhibit sudo pacman -Sy --noconfirm archlinux-keyring &&
 	systemd-inhibit sudo pacman -Syu
+}
 
+merge_dirs() {
+	local src="${1}"
+	local dest="${2}"
+	if [ "${3}" = "-v" ]; then
+		local verbose=1
+	elif [ "${3}" = "-vv" ]; then
+		local verbose=2
+	elif [ "${3}" = "-vvv" ]; then
+		local verbose=3
+	fi
+	if [ "${3}" = "--dry-run" ]; then
+		echo "Do not perform filesystem changes"
+		local dry_run=1
+	fi
+
+	local function merge_file() {
+		local srcfile="${file}"
+		local file="${file#"${src}/"}"
+		if ! [ -f "${srcfile}" ]; then
+			if [[ ${verbose} -ge 2 ]]; then
+				echo "Not a file ${srcfile} - skipping..."
+			fi
+			continue
+		fi
+		if [[ ${verbose} -ge 3 ]]; then
+			echo "Processing ${srcfile}..."
+		fi
+
+		local destfile="${dest}/${file}"
+		if [ -e "${destfile}" ]; then
+			if [ -f "${destfile}" ]; then
+				if diff -q --binary "${srcfile}" "${destfile}" 2>&1 >/dev/null ; then
+					if [[ ${verbose} -ge 3 ]]; then
+						echo "Discarding ${srcfile}..."
+					fi
+
+					if [ ! ${dry_run} ]; then
+						local trashdest="/tmp/merge_dirs_trash"
+						\mkdir -p "${trashdest}/$(dirname "${file}")"
+						\mv "${srcfile}" "${trashdest}/${file}"
+					fi
+					echo "discard ${srcfile}" >> "/tmp/merge_dirs_log"
+				else
+					if [[ ${verbose} -ge 3 ]]; then
+						echo "Conflicting ${srcfile}..."
+					fi
+
+					echo "conflict ${srcfile}" >> "/tmp/merge_dirs_log"
+				fi
+			else
+				if [[ ${verbose} -ge 3 ]]; then
+					echo "Type conflicting ${srcfile}..."
+				fi
+
+				echo "typechange ${srcfile}" >> "/tmp/merge_dirs_log"
+			fi
+		else
+			if [[ ${verbose} -ge 1 ]]; then
+				local mkdir_options="-v"
+				local mv_options="-v"
+			fi
+
+			if [ ! ${dry_run} ]; then
+				local destdir="$(dirname "${destfile}")"
+				\mkdir -p ${mkdir_options} "${destdir}"
+				\mv ${mv_options} "${srcfile}" "${destfile}"
+			fi
+			echo "move ${srcfile}" >> "/tmp/merge_dirs_log"
+		fi
+	}
+
+	echo "====== START $(date) ======" >> "/tmp/merge_dirs_log"
+	for file in "${src}"/**/*(N) ; do
+		merge_file "${file}"
+	done
+	for file in "${src}"/**/.*(N) ; do
+		merge_file "${file}"
+	done
+	for file in "${src}"/**/.*/**/*(N) ; do
+		merge_file "${file}"
+	done
+	for file in "${src}"/**/.*/**/.*(N) ; do
+		merge_file "${file}"
+	done
 }
 
 resume() {
