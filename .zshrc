@@ -134,14 +134,14 @@ update() {
 	# sudo pacman-key --populate
 
 	if [ "${1}" = "mirror" ] || [ "${1}" = "full" ]; then
-		reflector --protocol https --latest 50 --fastest 8 --age 24 --sort rate --country France,Germany,Switzerland,Austria --verbose > /tmp/mirrorlist &&
-		sudo mv -i /tmp/mirrorlist /etc/pacman.d/mirrorlist &&
+		reflector --protocol https --latest 16 --fastest 8 --age 24 --sort rate --country France,Germany,Switzerland,Austria --verbose > /tmp/mirrorlist &&
+		sudo \mv -i /tmp/mirrorlist /etc/pacman.d/mirrorlist &&
 	elif [ "${1}" = "full" ]; then
 		sudo pkgfile --update &&
 	fi
 
 	systemd-inhibit sudo pacman -Sy --noconfirm archlinux-keyring &&
-	systemd-inhibit sudo pacman -Syu
+	systemd-inhibit sudo pacman -Su
 }
 
 merge_dirs() {
