@@ -147,14 +147,14 @@ update() {
 merge_dirs() {
 	local src="${1}"
 	local dest="${2}"
-	if [ "${3}" = "-v" ]; then
+	if [ "${3}" = "-v" ] || [ "${4}" = "-v" ]; then
 		local verbose=1
-	elif [ "${3}" = "-vv" ]; then
+	elif [ "${3}" = "-vv" ] || [ "${4}" = "-vv" ]; then
 		local verbose=2
-	elif [ "${3}" = "-vvv" ]; then
+	elif [ "${3}" = "-vvv" ] || [ "${4}" = "-vvv" ]; then
 		local verbose=3
 	fi
-	if [ "${3}" = "--dry-run" ]; then
+	if [ "${3}" = "--dry-run" ] || [ "${4}" = "--dry-run" ]; then
 		echo "Do not perform filesystem changes"
 		local dry_run=1
 	fi
