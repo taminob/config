@@ -31,11 +31,16 @@ RUN python ~/sync/config/install.py --noconfirm --configs home .config --host ta
 RUN python ~/sync/config/install.py --noconfirm --aur --host taminob-linux
 
 # install packages
-RUN python ~/sync/config/install.py --noconfirm --packages base --host taminob-linux && pacman -Scc --noconfirm
-RUN python ~/sync/config/install.py --noconfirm --packages shell --host taminob-linux && pacman -Scc --noconfirm
-RUN python ~/sync/config/install.py --noconfirm --packages dev --host taminob-linux && pacman -Scc --noconfirm
-RUN python ~/sync/config/install.py --noconfirm --packages font --host taminob-linux && pacman -Scc --noconfirm
-RUN python ~/sync/config/install.py --noconfirm --packages hacking --host taminob-linux && pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --packages base --host taminob-linux && \
+    sudo pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --packages shell --host taminob-linux && \
+    sudo pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --packages dev --host taminob-linux && \
+    sudo pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --packages font --host taminob-linux && \
+    sudo pacman -Scc --noconfirm
+RUN python ~/sync/config/install.py --noconfirm --packages hacking --host taminob-linux && \
+    sudo pacman -Scc --noconfirm
 
 # setup and install neovim plugins
 RUN nvim -c "PlugInstall" -c "qa" && \
