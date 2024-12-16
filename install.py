@@ -356,24 +356,32 @@ def install_configs(config_filter: Callable[[Config], bool] = lambda _: True):
 
 
 def install_aur_helper(aur_helper: str, no_confirm: bool = False):
-    GIT_URL = f"https://aur.archlinux.org/{aur_helper}.git"
-    REPO_DIR = f"/tmp/{aur_helper}"
+    git_url = f"https://aur.archlinux.org/{aur_helper}.git"
+    repo_dir = f"/tmp/{aur_helper}"
 
     # install build dependencies
     perform_package_installation(
         ["fakeroot", "debugedit", "binutils", "make", "gcc"], no_confirm=no_confirm
     )
 
-    if has_git_support and git:
-        git.Repo.clone_from(GIT_URL, REPO_DIR)
-    else:
-        subprocess.run(["git", "clone", GIT_URL, REPO_DIR])
+    git_clone(git_url, repo_dir)
 
+    makepkg_installation(repo_dir, no_confirm)
+
+
+def git_clone(git_url: str, repo_dir: str):
+    if has_git_support and git:
+        git.Repo.clone_from(git_url, repo_dir)
+    else:
+        subprocess.run(["git", "clone", git_url, repo_dir])
+
+
+def makepkg_installation(package_dir: str, no_confirm: bool = False):
     makepkg_args = ["makepkg", "-s", "-i"]
     if no_confirm:
         makepkg_args.append("--noconfirm")
 
-    subprocess.run(makepkg_args, cwd=REPO_DIR)
+    subprocess.run(makepkg_args, cwd=package_dir)
 
 
 def install_packages(
@@ -397,10 +405,18 @@ def install_packages(
             warning("No AUR helper available for installation of AUR packages!")
 
 
-def install_custom_packages():
-    script_name: str = "packages/install_custom.sh"
-    script_path: str = get_config_path() + f"/{script_name}"
-    subprocess.run(script_path)
+def install_custom_packages(no_confirm: bool = False):
+    repo_dir = "/tmp/arch-packages/"
+
+    git_clone("https://github.com/taminob/arch-packages", repo_dir)
+
+    for package in os.listdir(repo_dir):
+        package_dir = repo_dir + package
+        if package.startswith(".") or not os.path.isdir(package_dir):
+            continue
+
+        print(f"Installing custom package in '{package_dir}'")
+        makepkg_installation(package_dir, no_confirm)
 
 
 def set_default_shell():
@@ -432,7 +448,7 @@ def main():
     parser.add_argument("--allow-root", action="store_true")
     parser.add_argument("--config-path", type=str)
     parser.add_argument("--fix-path", action="store_true")
-    parser.add_argument("--hostname", type=str)
+    parser.add_argument("--hostname", type=str, default=get_hostname())
     parser.add_argument("--install-custom", action="store_true")
     parser.add_argument(
         "--packages", type=str, nargs="*", choices=get_package_categories(), default=[]
@@ -447,8 +463,12 @@ def main():
     get_user_info(args.allow_root)  # aborts if root is not allowed
 
     global _config_path
-    if _config_path and os.path.normpath(args.config_path) != os.path.normpath(get_config_path()):
-        warning(f"Given config path '{_config_path}' does not match actual path '{get_config_path()}'")
+    if _config_path and os.path.normpath(args.config_path) != os.path.normpath(
+        get_config_path()
+    ):
+        warning(
+            f"Given config path '{_config_path}' does not match actual path '{get_config_path()}'"
+        )
     _config_path = args.config_path
     if _config_path and not os.path.exists(_config_path):
         abort(f"Given config path '{_config_path}' does not exist")
@@ -473,7 +493,7 @@ def main():
     install_packages(lambda c: c in args.packages, no_confirm=args.noconfirm)
     if args.install_custom:
         print("Installing custom packages...")
-        install_custom_packages()
+        install_custom_packages(args.noconfirm)
 
     if args.set_shell:
         print("Settings default shell...")
