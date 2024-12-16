@@ -55,6 +55,13 @@ def get_hostname() -> str:
     return socket.gethostname()
 
 
+def guess_os() -> str:
+    hostname: str = get_hostname()
+    if "debian" in hostname:
+        return "debian"
+    return "arch"
+
+
 DEFAULT_CONFIG_PATH = "/home/me/sync/config"
 _config_path: str | None = None
 
@@ -94,20 +101,20 @@ def get_installed_packages(q_args: list[str] = []) -> list[str]:
     return installed_packages
 
 
-def get_packages_diff() -> dict[str, list[str]]:
+def get_packages_diff(os_dist: str) -> dict[str, list[str]]:
     installed_packages = get_installed_packages()
     all_diffs: dict[str, list[str]] = {}
 
-    for category, packages in get_packages().items():
+    for category, packages in get_packages(os_dist).items():
         diff = [item for item in packages if item not in installed_packages]
         all_diffs[category] = diff
     return all_diffs
 
 
-def get_additionally_installed_packages():
+def get_additionally_installed_packages(os_dist: str):
     installed_packages = get_installed_packages(["-t", "-t"])
 
-    all_packages = [item for p in get_packages().values() for item in p]
+    all_packages = [item for p in get_packages(os_dist).values() for item in p]
 
     manual_installed = []
     for x in installed_packages:
@@ -116,30 +123,18 @@ def get_additionally_installed_packages():
     return manual_installed
 
 
-def get_packages_files() -> list[str]:
-    packages_path = get_config_path() + "/packages"
+def get_packages_files(os_dist: str) -> list[str]:
+    packages_path = get_config_path() + f"/packages/{os_dist}"
 
-    platform_packages = get_hostname() + "_packages_"
-
-    packages_files = glob.glob(packages_path + "/*_packages")
-    packages_files.append(packages_path + "/aur_packages_")
-    packages_files.append(packages_path + "/" + platform_packages)
+    packages_files: list[str] = [
+        f"{packages_path}/{package_file}" for package_file in os.listdir(packages_path)
+    ]
 
     return packages_files
 
 
-def get_package_categories() -> list[str]:
-    categories: list[str] = []
-    for file_name in get_packages_files():
-        category: str = (
-            os.path.basename(file_name).removesuffix("_").removesuffix("_packages")
-        )
-        categories.append(category)
-    return categories
-
-
-def get_packages() -> dict[str, list[str]]:
-    packages_files = get_packages_files()
+def get_packages(os_dist: str) -> dict[str, list[str]]:
+    packages_files: list[str] = get_packages_files(os_dist)
 
     packages: dict[str, list[str]] = {}
     for file_name in packages_files:
@@ -153,9 +148,7 @@ def get_packages() -> dict[str, list[str]]:
                     line_end = len(line) if (comment_pos < 0) else comment_pos
                     file_packages.extend(line[:line_end].split())
 
-            category: str = (
-                os.path.basename(file_name).removesuffix("_").removesuffix("_packages")
-            )
+            category: str = os.path.basename(file_name)
             packages[category] = file_packages
         except OSError:
             warning(f"Unable to read packages file '{file_name}'")
@@ -385,11 +378,12 @@ def makepkg_installation(package_dir: str, no_confirm: bool = False):
 
 
 def install_packages(
+    os_dist: str,
     package_filter: Callable[[str], bool] = lambda _: True,
     no_confirm: bool = False,
     aur_helper: str | None = None,
 ):
-    all_packages: dict[str, list[str]] = get_packages()
+    all_packages: dict[str, list[str]] = get_packages(os_dist)
 
     for category, packages in all_packages.items():
         if not package_filter(category):
@@ -449,9 +443,14 @@ def main():
     parser.add_argument("--config-path", type=str)
     parser.add_argument("--fix-path", action="store_true")
     parser.add_argument("--hostname", type=str, default=get_hostname())
+    parser.add_argument("--os", type=str, default=guess_os())
     parser.add_argument("--install-custom", action="store_true")
     parser.add_argument(
-        "--packages", type=str, nargs="*", choices=get_package_categories(), default=[]
+        "--packages",
+        type=str,
+        nargs="*",
+        choices=list(get_packages("arch").keys()) + list(get_packages("debian").keys()),
+        default=[],
     )
     parser.add_argument("--create-user-files", action="store_true")
     parser.add_argument(
@@ -486,11 +485,16 @@ def main():
         print("Installing AUR helper...")
         install_aur_helper(args.aur_helper, no_confirm=args.noconfirm)
 
-    print("Not installed packages: ", get_packages_diff())
-    print("Additionally installed packages: ", get_additionally_installed_packages())
+    print("Not installed packages: ", get_packages_diff(args.os))
+    print(
+        "Additionally installed packages: ",
+        get_additionally_installed_packages(args.os),
+    )
 
     print("Installing packages ", args.packages, "...")
-    install_packages(lambda c: c in args.packages, no_confirm=args.noconfirm)
+    install_packages(
+        args.os, package_filter=lambda c: c in args.packages, no_confirm=args.noconfirm
+    )
     if args.install_custom:
         print("Installing custom packages...")
         install_custom_packages(args.noconfirm)
