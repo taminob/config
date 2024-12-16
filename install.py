@@ -394,7 +394,11 @@ def install_packages(
             continue
 
         if category != "aur":
-            perform_package_installation(packages, no_confirm=no_confirm)
+            if os_dist == "debian":
+                program = "apt-get"
+            else:
+                program = "pacman"
+            perform_package_installation(packages, no_confirm=no_confirm, program=program)
         elif aur_helper:
             perform_package_installation(
                 packages, no_confirm=no_confirm, program=aur_helper
