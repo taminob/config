@@ -1,0 +1,52 @@
+###########
+# base    #
+###########
+
+nftables
+sudo
+dhcpcd
+git
+vim
+
+###########
+# shell   #
+###########
+
+neovim
+exa # =eza
+zsh zsh-autosuggestions zsh-doc zsh-syntax-highlighting
+bat
+fd-find # =fd
+fzf
+htop
+man-db
+tldr
+ranger
+trash-cli
+tmux
+zip unzip
+wget
+whois
+rclone
+rsync
+tree
+powerline
+zoxide
+restic
+silversearcher-ag # =the_silver_searcher
+
+###########
+# dev     #
+###########
+
+libboost-all-dev # =boost
+cmake
+gcc gdb
+ninja-build # =ninja
+rust-all
+cargo
+python3 python3-pip virtualenv
+npm
+
+# cargo install dua-cli
+# cargo install git-delta
