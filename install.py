@@ -78,10 +78,14 @@ def perform_package_installation(
     program: str = "pacman",
     run_sudo: bool = True,
 ):
-    args: list[str] = ["-Sy", "--needed"]
-
-    if no_confirm:
-        args.append("--noconfirm")
+    if program in ["apt", "apt-get"]:
+        args: list[str] = ["install"]
+        if no_confirm:
+            args.append("-y")
+    else:
+        args: list[str] = ["-Sy", "--needed"]
+        if no_confirm:
+            args.append("--noconfirm")
 
     command: list[str] = [program]
     if run_sudo:
@@ -101,20 +105,20 @@ def get_installed_packages(q_args: list[str] = []) -> list[str]:
     return installed_packages
 
 
-def get_packages_diff(os_dist: str) -> dict[str, list[str]]:
+def get_packages_diff() -> dict[str, list[str]]:
     installed_packages = get_installed_packages()
     all_diffs: dict[str, list[str]] = {}
 
-    for category, packages in get_packages(os_dist).items():
+    for category, packages in get_packages("arch").items():
         diff = [item for item in packages if item not in installed_packages]
         all_diffs[category] = diff
     return all_diffs
 
 
-def get_additionally_installed_packages(os_dist: str):
+def get_additionally_installed_packages():
     installed_packages = get_installed_packages(["-t", "-t"])
 
-    all_packages = [item for p in get_packages(os_dist).values() for item in p]
+    all_packages = [item for p in get_packages("arch").values() for item in p]
 
     manual_installed = []
     for x in installed_packages:
@@ -443,7 +447,9 @@ def main():
     parser.add_argument("--config-path", type=str)
     parser.add_argument("--fix-path", action="store_true")
     parser.add_argument("--hostname", type=str, default=get_hostname())
-    parser.add_argument("--os", type=str, default=guess_os())
+    parser.add_argument(
+        "--os", type=str, choices=["arch", "debian"], default=guess_os()
+    )
     parser.add_argument("--install-custom", action="store_true")
     parser.add_argument(
         "--packages",
@@ -485,11 +491,13 @@ def main():
         print("Installing AUR helper...")
         install_aur_helper(args.aur_helper, no_confirm=args.noconfirm)
 
-    print("Not installed packages: ", get_packages_diff(args.os))
-    print(
-        "Additionally installed packages: ",
-        get_additionally_installed_packages(args.os),
-    )
+    if args.os == "arch":
+        # for now, this is only supported for systems based on arch
+        print("Not installed packages: ", get_packages_diff())
+        print(
+            "Additionally installed packages: ",
+            get_additionally_installed_packages(),
+        )
 
     print("Installing packages ", args.packages, "...")
     install_packages(
