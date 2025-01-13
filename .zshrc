@@ -282,6 +282,14 @@ docker_latest_bash() {
 	docker exec -it "$(docker ps --latest --format "{{.ID}}")" bash
 }
 
+firewall_disable() {
+	sudo nft flush ruleset
+}
+
+firewall_reload() {
+	sudo nft -f /etc/nftables.conf
+}
+
 # custom shortcuts
 bindkey '^[c' vi-cmd-mode # alt-c: enter cmd mode
 
